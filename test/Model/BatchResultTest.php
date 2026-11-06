@@ -124,4 +124,13 @@ class BatchResultTest extends TestCase
         // TODO: implement
         self::markTestIncomplete('Not implemented');
     }
+
+    /**
+     * Test attribute "warning"
+     */
+    public function testPropertyWarning()
+    {
+        // TODO: implement
+        self::markTestIncomplete('Not implemented');
+    }
 }

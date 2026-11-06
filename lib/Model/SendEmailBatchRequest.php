@@ -58,7 +58,8 @@ class SendEmailBatchRequest implements ModelInterface, ArrayAccess, \JsonSeriali
      * @var string[]
      */
     protected static $openAPITypes = [
-        'messages' => '\Lockally\SDK\Model\SendMessage[]'
+        'messages' => '\Lockally\SDK\Model\SendMessage[]',
+        'variables' => 'array<string,string>'
     ];
 
     /**
@@ -69,7 +70,8 @@ class SendEmailBatchRequest implements ModelInterface, ArrayAccess, \JsonSeriali
      * @psalm-var array<string, string|null>
      */
     protected static $openAPIFormats = [
-        'messages' => null
+        'messages' => null,
+        'variables' => null
     ];
 
     /**
@@ -78,7 +80,8 @@ class SendEmailBatchRequest implements ModelInterface, ArrayAccess, \JsonSeriali
      * @var boolean[]
      */
     protected static array $openAPINullables = [
-        'messages' => false
+        'messages' => false,
+        'variables' => false
     ];
 
     /**
@@ -167,7 +170,8 @@ class SendEmailBatchRequest implements ModelInterface, ArrayAccess, \JsonSeriali
      * @var string[]
      */
     protected static $attributeMap = [
-        'messages' => 'messages'
+        'messages' => 'messages',
+        'variables' => 'variables'
     ];
 
     /**
@@ -176,7 +180,8 @@ class SendEmailBatchRequest implements ModelInterface, ArrayAccess, \JsonSeriali
      * @var string[]
      */
     protected static $setters = [
-        'messages' => 'setMessages'
+        'messages' => 'setMessages',
+        'variables' => 'setVariables'
     ];
 
     /**
@@ -185,7 +190,8 @@ class SendEmailBatchRequest implements ModelInterface, ArrayAccess, \JsonSeriali
      * @var string[]
      */
     protected static $getters = [
-        'messages' => 'getMessages'
+        'messages' => 'getMessages',
+        'variables' => 'getVariables'
     ];
 
     /**
@@ -246,6 +252,7 @@ class SendEmailBatchRequest implements ModelInterface, ArrayAccess, \JsonSeriali
     public function __construct(?array $data = null)
     {
         $this->setIfExists('messages', $data ?? [], null);
+        $this->setIfExists('variables', $data ?? [], null);
     }
 
     /**
@@ -331,6 +338,33 @@ class SendEmailBatchRequest implements ModelInterface, ArrayAccess, \JsonSeriali
             throw new \InvalidArgumentException('invalid length for $messages when calling SendEmailBatchRequest., number of items must be greater than or equal to 1.');
         }
         $this->container['messages'] = $messages;
+
+        return $this;
+    }
+
+    /**
+     * Gets variables
+     *
+     * @return array<string,string>|null
+     */
+    public function getVariables()
+    {
+        return $this->container['variables'];
+    }
+
+    /**
+     * Sets variables
+     *
+     * @param array<string,string>|null $variables Template variables every message in the batch inherits. Each message's own `variables` override these key by key, so shared values are written once and per-recipient ones stay per-recipient.  Without this, a 500-message batch repeats every shared variable 500 times: most of the payload, and 500 places for one of them to differ by a typo.
+     *
+     * @return self
+     */
+    public function setVariables($variables)
+    {
+        if (is_null($variables)) {
+            throw new \InvalidArgumentException('non-nullable variables cannot be null');
+        }
+        $this->container['variables'] = $variables;
 
         return $this;
     }

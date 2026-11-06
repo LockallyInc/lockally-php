@@ -293,7 +293,7 @@ This endpoint does not need any parameter.
 ## `getTenantHealth()`
 
 ```php
-getTenantHealth(): object
+getTenantHealth(): \Lockally\SDK\Model\TenantHealthReport
 ```
 
 Full tenant health report
@@ -330,7 +330,7 @@ This endpoint does not need any parameter.
 
 ### Return type
 
-**object**
+[**\Lockally\SDK\Model\TenantHealthReport**](../Model/TenantHealthReport.md)
 
 ### Authorization
 

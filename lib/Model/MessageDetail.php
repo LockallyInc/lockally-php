@@ -70,6 +70,8 @@ class MessageDetail implements ModelInterface, ArrayAccess, \JsonSerializable
         'updated_at' => '\DateTime',
         'bounce_reason' => 'string',
         'size_bytes' => 'int',
+        'metadata' => 'array<string,string>',
+        'tags' => 'string[]',
         'from' => 'string',
         'to' => 'string[]',
         'cc' => 'string[]',
@@ -98,6 +100,8 @@ class MessageDetail implements ModelInterface, ArrayAccess, \JsonSerializable
         'updated_at' => 'date-time',
         'bounce_reason' => null,
         'size_bytes' => null,
+        'metadata' => null,
+        'tags' => null,
         'from' => 'email',
         'to' => 'email',
         'cc' => 'email',
@@ -124,6 +128,8 @@ class MessageDetail implements ModelInterface, ArrayAccess, \JsonSerializable
         'updated_at' => false,
         'bounce_reason' => false,
         'size_bytes' => false,
+        'metadata' => false,
+        'tags' => false,
         'from' => false,
         'to' => false,
         'cc' => false,
@@ -230,6 +236,8 @@ class MessageDetail implements ModelInterface, ArrayAccess, \JsonSerializable
         'updated_at' => 'updated_at',
         'bounce_reason' => 'bounce_reason',
         'size_bytes' => 'size_bytes',
+        'metadata' => 'metadata',
+        'tags' => 'tags',
         'from' => 'from',
         'to' => 'to',
         'cc' => 'cc',
@@ -256,6 +264,8 @@ class MessageDetail implements ModelInterface, ArrayAccess, \JsonSerializable
         'updated_at' => 'setUpdatedAt',
         'bounce_reason' => 'setBounceReason',
         'size_bytes' => 'setSizeBytes',
+        'metadata' => 'setMetadata',
+        'tags' => 'setTags',
         'from' => 'setFrom',
         'to' => 'setTo',
         'cc' => 'setCc',
@@ -282,6 +292,8 @@ class MessageDetail implements ModelInterface, ArrayAccess, \JsonSerializable
         'updated_at' => 'getUpdatedAt',
         'bounce_reason' => 'getBounceReason',
         'size_bytes' => 'getSizeBytes',
+        'metadata' => 'getMetadata',
+        'tags' => 'getTags',
         'from' => 'getFrom',
         'to' => 'getTo',
         'cc' => 'getCc',
@@ -382,6 +394,8 @@ class MessageDetail implements ModelInterface, ArrayAccess, \JsonSerializable
         $this->setIfExists('updated_at', $data ?? [], null);
         $this->setIfExists('bounce_reason', $data ?? [], null);
         $this->setIfExists('size_bytes', $data ?? [], null);
+        $this->setIfExists('metadata', $data ?? [], null);
+        $this->setIfExists('tags', $data ?? [], null);
         $this->setIfExists('from', $data ?? [], null);
         $this->setIfExists('to', $data ?? [], null);
         $this->setIfExists('cc', $data ?? [], null);
@@ -769,6 +783,60 @@ class MessageDetail implements ModelInterface, ArrayAccess, \JsonSerializable
             throw new \InvalidArgumentException('non-nullable size_bytes cannot be null');
         }
         $this->container['size_bytes'] = $size_bytes;
+
+        return $this;
+    }
+
+    /**
+     * Gets metadata
+     *
+     * @return array<string,string>|null
+     */
+    public function getMetadata()
+    {
+        return $this->container['metadata'];
+    }
+
+    /**
+     * Sets metadata
+     *
+     * @param array<string,string>|null $metadata The sender's own key/value from the send request. Always present; `{}` when none was set.
+     *
+     * @return self
+     */
+    public function setMetadata($metadata)
+    {
+        if (is_null($metadata)) {
+            throw new \InvalidArgumentException('non-nullable metadata cannot be null');
+        }
+        $this->container['metadata'] = $metadata;
+
+        return $this;
+    }
+
+    /**
+     * Gets tags
+     *
+     * @return string[]|null
+     */
+    public function getTags()
+    {
+        return $this->container['tags'];
+    }
+
+    /**
+     * Sets tags
+     *
+     * @param string[]|null $tags Grouping labels, lowercased and deduplicated. Always present; `[]` when none were set.
+     *
+     * @return self
+     */
+    public function setTags($tags)
+    {
+        if (is_null($tags)) {
+            throw new \InvalidArgumentException('non-nullable tags cannot be null');
+        }
+        $this->container['tags'] = $tags;
 
         return $this;
     }

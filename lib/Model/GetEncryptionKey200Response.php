@@ -63,7 +63,12 @@ class GetEncryptionKey200Response implements ModelInterface, ArrayAccess, \JsonS
         'public_key' => 'string',
         'encrypted_private_key' => 'string',
         'kdf_params' => 'object',
-        'version' => 'int'
+        'version' => 'int',
+        'created_at' => '\DateTime',
+        'rotated_at' => '\DateTime',
+        'has_recovery' => 'bool',
+        'recovery_set_at' => '\DateTime',
+        'recovery_blob' => 'string'
     ];
 
     /**
@@ -79,7 +84,12 @@ class GetEncryptionKey200Response implements ModelInterface, ArrayAccess, \JsonS
         'public_key' => null,
         'encrypted_private_key' => null,
         'kdf_params' => null,
-        'version' => null
+        'version' => null,
+        'created_at' => 'date-time',
+        'rotated_at' => 'date-time',
+        'has_recovery' => null,
+        'recovery_set_at' => 'date-time',
+        'recovery_blob' => null
     ];
 
     /**
@@ -93,7 +103,12 @@ class GetEncryptionKey200Response implements ModelInterface, ArrayAccess, \JsonS
         'public_key' => false,
         'encrypted_private_key' => false,
         'kdf_params' => false,
-        'version' => false
+        'version' => false,
+        'created_at' => false,
+        'rotated_at' => false,
+        'has_recovery' => false,
+        'recovery_set_at' => false,
+        'recovery_blob' => false
     ];
 
     /**
@@ -187,7 +202,12 @@ class GetEncryptionKey200Response implements ModelInterface, ArrayAccess, \JsonS
         'public_key' => 'public_key',
         'encrypted_private_key' => 'encrypted_private_key',
         'kdf_params' => 'kdf_params',
-        'version' => 'version'
+        'version' => 'version',
+        'created_at' => 'created_at',
+        'rotated_at' => 'rotated_at',
+        'has_recovery' => 'has_recovery',
+        'recovery_set_at' => 'recovery_set_at',
+        'recovery_blob' => 'recovery_blob'
     ];
 
     /**
@@ -201,7 +221,12 @@ class GetEncryptionKey200Response implements ModelInterface, ArrayAccess, \JsonS
         'public_key' => 'setPublicKey',
         'encrypted_private_key' => 'setEncryptedPrivateKey',
         'kdf_params' => 'setKdfParams',
-        'version' => 'setVersion'
+        'version' => 'setVersion',
+        'created_at' => 'setCreatedAt',
+        'rotated_at' => 'setRotatedAt',
+        'has_recovery' => 'setHasRecovery',
+        'recovery_set_at' => 'setRecoverySetAt',
+        'recovery_blob' => 'setRecoveryBlob'
     ];
 
     /**
@@ -215,7 +240,12 @@ class GetEncryptionKey200Response implements ModelInterface, ArrayAccess, \JsonS
         'public_key' => 'getPublicKey',
         'encrypted_private_key' => 'getEncryptedPrivateKey',
         'kdf_params' => 'getKdfParams',
-        'version' => 'getVersion'
+        'version' => 'getVersion',
+        'created_at' => 'getCreatedAt',
+        'rotated_at' => 'getRotatedAt',
+        'has_recovery' => 'getHasRecovery',
+        'recovery_set_at' => 'getRecoverySetAt',
+        'recovery_blob' => 'getRecoveryBlob'
     ];
 
     /**
@@ -281,6 +311,11 @@ class GetEncryptionKey200Response implements ModelInterface, ArrayAccess, \JsonS
         $this->setIfExists('encrypted_private_key', $data ?? [], null);
         $this->setIfExists('kdf_params', $data ?? [], null);
         $this->setIfExists('version', $data ?? [], null);
+        $this->setIfExists('created_at', $data ?? [], null);
+        $this->setIfExists('rotated_at', $data ?? [], null);
+        $this->setIfExists('has_recovery', $data ?? [], null);
+        $this->setIfExists('recovery_set_at', $data ?? [], null);
+        $this->setIfExists('recovery_blob', $data ?? [], null);
     }
 
     /**
@@ -483,6 +518,141 @@ class GetEncryptionKey200Response implements ModelInterface, ArrayAccess, \JsonS
             throw new \InvalidArgumentException('non-nullable version cannot be null');
         }
         $this->container['version'] = $version;
+
+        return $this;
+    }
+
+    /**
+     * Gets created_at
+     *
+     * @return \DateTime|null
+     */
+    public function getCreatedAt()
+    {
+        return $this->container['created_at'];
+    }
+
+    /**
+     * Sets created_at
+     *
+     * @param \DateTime|null $created_at created_at
+     *
+     * @return self
+     */
+    public function setCreatedAt($created_at)
+    {
+        if (is_null($created_at)) {
+            throw new \InvalidArgumentException('non-nullable created_at cannot be null');
+        }
+        $this->container['created_at'] = $created_at;
+
+        return $this;
+    }
+
+    /**
+     * Gets rotated_at
+     *
+     * @return \DateTime|null
+     */
+    public function getRotatedAt()
+    {
+        return $this->container['rotated_at'];
+    }
+
+    /**
+     * Sets rotated_at
+     *
+     * @param \DateTime|null $rotated_at rotated_at
+     *
+     * @return self
+     */
+    public function setRotatedAt($rotated_at)
+    {
+        if (is_null($rotated_at)) {
+            throw new \InvalidArgumentException('non-nullable rotated_at cannot be null');
+        }
+        $this->container['rotated_at'] = $rotated_at;
+
+        return $this;
+    }
+
+    /**
+     * Gets has_recovery
+     *
+     * @return bool|null
+     */
+    public function getHasRecovery()
+    {
+        return $this->container['has_recovery'];
+    }
+
+    /**
+     * Sets has_recovery
+     *
+     * @param bool|null $has_recovery has_recovery
+     *
+     * @return self
+     */
+    public function setHasRecovery($has_recovery)
+    {
+        if (is_null($has_recovery)) {
+            throw new \InvalidArgumentException('non-nullable has_recovery cannot be null');
+        }
+        $this->container['has_recovery'] = $has_recovery;
+
+        return $this;
+    }
+
+    /**
+     * Gets recovery_set_at
+     *
+     * @return \DateTime|null
+     */
+    public function getRecoverySetAt()
+    {
+        return $this->container['recovery_set_at'];
+    }
+
+    /**
+     * Sets recovery_set_at
+     *
+     * @param \DateTime|null $recovery_set_at recovery_set_at
+     *
+     * @return self
+     */
+    public function setRecoverySetAt($recovery_set_at)
+    {
+        if (is_null($recovery_set_at)) {
+            throw new \InvalidArgumentException('non-nullable recovery_set_at cannot be null');
+        }
+        $this->container['recovery_set_at'] = $recovery_set_at;
+
+        return $this;
+    }
+
+    /**
+     * Gets recovery_blob
+     *
+     * @return string|null
+     */
+    public function getRecoveryBlob()
+    {
+        return $this->container['recovery_blob'];
+    }
+
+    /**
+     * Sets recovery_blob
+     *
+     * @param string|null $recovery_blob recovery_blob
+     *
+     * @return self
+     */
+    public function setRecoveryBlob($recovery_blob)
+    {
+        if (is_null($recovery_blob)) {
+            throw new \InvalidArgumentException('non-nullable recovery_blob cannot be null');
+        }
+        $this->container['recovery_blob'] = $recovery_blob;
 
         return $this;
     }

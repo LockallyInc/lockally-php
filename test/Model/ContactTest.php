@@ -205,4 +205,22 @@ class ContactTest extends TestCase
         // TODO: implement
         self::markTestIncomplete('Not implemented');
     }
+
+    /**
+     * Test attribute "external_system"
+     */
+    public function testPropertyExternalSystem()
+    {
+        // TODO: implement
+        self::markTestIncomplete('Not implemented');
+    }
+
+    /**
+     * Test attribute "external_id"
+     */
+    public function testPropertyExternalId()
+    {
+        // TODO: implement
+        self::markTestIncomplete('Not implemented');
+    }
 }

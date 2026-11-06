@@ -87,7 +87,7 @@ class UsersApiTest extends TestCase
     /**
      * Test case for deleteUser
      *
-     * Delete a user.
+     * Deprovision a user.
      *
      */
     public function testDeleteUser()

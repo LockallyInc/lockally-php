@@ -376,7 +376,7 @@ try {
 ## `listDomains()`
 
 ```php
-listDomains(): \Lockally\SDK\Model\ListDomains200Response
+listDomains($sort, $order): \Lockally\SDK\Model\ListDomains200Response
 ```
 
 List domains
@@ -400,9 +400,11 @@ $apiInstance = new Lockally\SDK\Api\DomainsApi(
     new GuzzleHttp\Client(),
     $config
 );
+$sort = 'created_at'; // string | Field to order by. This list holds tens of rows per account, so every column is offered and none needs an index.
+$order = 'order_example'; // string | Defaults to desc for the default field and asc for any other. Always tie-broken on id, so the order is total.
 
 try {
-    $result = $apiInstance->listDomains();
+    $result = $apiInstance->listDomains($sort, $order);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling DomainsApi->listDomains: ', $e->getMessage(), PHP_EOL;
@@ -411,7 +413,10 @@ try {
 
 ### Parameters
 
-This endpoint does not need any parameter.
+| Name | Type | Description  | Notes |
+| ------------- | ------------- | ------------- | ------------- |
+| **sort** | **string**| Field to order by. This list holds tens of rows per account, so every column is offered and none needs an index. | [optional] [default to &#39;created_at&#39;] |
+| **order** | **string**| Defaults to desc for the default field and asc for any other. Always tie-broken on id, so the order is total. | [optional] |
 
 ### Return type
 

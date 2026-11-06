@@ -72,6 +72,10 @@ class SendEmailRequest implements ModelInterface, ArrayAccess, \JsonSerializable
         'template_id' => 'string',
         'variables' => 'array<string,string>',
         'send_at' => '\DateTime',
+        'metadata' => 'array<string,string>',
+        'tags' => 'string[]',
+        'track_opens' => 'bool',
+        'track_clicks' => 'bool',
         'attachments' => '\Lockally\SDK\Model\SendEmailRequestAttachmentsInner[]'
     ];
 
@@ -97,6 +101,10 @@ class SendEmailRequest implements ModelInterface, ArrayAccess, \JsonSerializable
         'template_id' => 'uuid',
         'variables' => null,
         'send_at' => 'date-time',
+        'metadata' => null,
+        'tags' => null,
+        'track_opens' => null,
+        'track_clicks' => null,
         'attachments' => null
     ];
 
@@ -120,6 +128,10 @@ class SendEmailRequest implements ModelInterface, ArrayAccess, \JsonSerializable
         'template_id' => false,
         'variables' => false,
         'send_at' => false,
+        'metadata' => false,
+        'tags' => false,
+        'track_opens' => false,
+        'track_clicks' => false,
         'attachments' => false
     ];
 
@@ -223,6 +235,10 @@ class SendEmailRequest implements ModelInterface, ArrayAccess, \JsonSerializable
         'template_id' => 'template_id',
         'variables' => 'variables',
         'send_at' => 'send_at',
+        'metadata' => 'metadata',
+        'tags' => 'tags',
+        'track_opens' => 'track_opens',
+        'track_clicks' => 'track_clicks',
         'attachments' => 'attachments'
     ];
 
@@ -246,6 +262,10 @@ class SendEmailRequest implements ModelInterface, ArrayAccess, \JsonSerializable
         'template_id' => 'setTemplateId',
         'variables' => 'setVariables',
         'send_at' => 'setSendAt',
+        'metadata' => 'setMetadata',
+        'tags' => 'setTags',
+        'track_opens' => 'setTrackOpens',
+        'track_clicks' => 'setTrackClicks',
         'attachments' => 'setAttachments'
     ];
 
@@ -269,6 +289,10 @@ class SendEmailRequest implements ModelInterface, ArrayAccess, \JsonSerializable
         'template_id' => 'getTemplateId',
         'variables' => 'getVariables',
         'send_at' => 'getSendAt',
+        'metadata' => 'getMetadata',
+        'tags' => 'getTags',
+        'track_opens' => 'getTrackOpens',
+        'track_clicks' => 'getTrackClicks',
         'attachments' => 'getAttachments'
     ];
 
@@ -343,6 +367,10 @@ class SendEmailRequest implements ModelInterface, ArrayAccess, \JsonSerializable
         $this->setIfExists('template_id', $data ?? [], null);
         $this->setIfExists('variables', $data ?? [], null);
         $this->setIfExists('send_at', $data ?? [], null);
+        $this->setIfExists('metadata', $data ?? [], null);
+        $this->setIfExists('tags', $data ?? [], null);
+        $this->setIfExists('track_opens', $data ?? [], null);
+        $this->setIfExists('track_clicks', $data ?? [], null);
         $this->setIfExists('attachments', $data ?? [], null);
     }
 
@@ -381,6 +409,14 @@ class SendEmailRequest implements ModelInterface, ArrayAccess, \JsonSerializable
         }
         if ((count($this->container['to']) < 1)) {
             $invalidProperties[] = "invalid value for 'to', number of items must be greater than or equal to 1.";
+        }
+
+        if (!is_null($this->container['metadata']) && (count($this->container['metadata']) > 20)) {
+            $invalidProperties[] = "invalid value for 'metadata', number of items must be less than or equal to 20.";
+        }
+
+        if (!is_null($this->container['tags']) && (count($this->container['tags']) > 10)) {
+            $invalidProperties[] = "invalid value for 'tags', number of items must be less than or equal to 10.";
         }
 
         return $invalidProperties;
@@ -777,6 +813,122 @@ class SendEmailRequest implements ModelInterface, ArrayAccess, \JsonSerializable
             throw new \InvalidArgumentException('non-nullable send_at cannot be null');
         }
         $this->container['send_at'] = $send_at;
+
+        return $this;
+    }
+
+    /**
+     * Gets metadata
+     *
+     * @return array<string,string>|null
+     */
+    public function getMetadata()
+    {
+        return $this->container['metadata'];
+    }
+
+    /**
+     * Sets metadata
+     *
+     * @param array<string,string>|null $metadata Arbitrary key/value you attach to this message and get back on every delivery webhook for it, so a send can be matched to your own records without a lookup table.  **It never leaves Lockally.** A custom entry in `headers` goes out on the wire to the recipient, which is why that is not a substitute: order ids and internal identifiers do not belong in a header the recipient can read.  At most 20 keys, keys at most 64 characters, values at most 512. **Over a limit is refused with a `400`, never truncated**: a silently shortened order id succeeds and then fails to match weeks later.  Not indexed and not filterable.
+     *
+     * @return self
+     */
+    public function setMetadata($metadata)
+    {
+        if (is_null($metadata)) {
+            throw new \InvalidArgumentException('non-nullable metadata cannot be null');
+        }
+
+        if ((count($metadata) > 20)) {
+            throw new \InvalidArgumentException('invalid value for $metadata when calling SendEmailRequest., number of items must be less than or equal to 20.');
+        }
+        $this->container['metadata'] = $metadata;
+
+        return $this;
+    }
+
+    /**
+     * Gets tags
+     *
+     * @return string[]|null
+     */
+    public function getTags()
+    {
+        return $this->container['tags'];
+    }
+
+    /**
+     * Sets tags
+     *
+     * @param string[]|null $tags Labels that group this send for filtering and analytics: campaign, template, environment.  **Lowercased, trimmed and deduplicated on write**, so the grouping does not depend on every caller spelling them identically. `Campaign-X` is stored as `campaign-x`, and either spelling matches it in a filter.  At most 10 per message after deduplication, each at most 32 characters. Over either is a `400` rather than a trimmed list: a send missing the tag it was tagged for is worse than a refusal.  Unlike `metadata`, tags ARE queryable: filter with `GET /v1/messages?tag=` and group with `GET /v1/messages/stats?tag=`.
+     *
+     * @return self
+     */
+    public function setTags($tags)
+    {
+        if (is_null($tags)) {
+            throw new \InvalidArgumentException('non-nullable tags cannot be null');
+        }
+
+        if ((count($tags) > 10)) {
+            throw new \InvalidArgumentException('invalid value for $tags when calling SendEmailRequest., number of items must be less than or equal to 10.');
+        }
+        $this->container['tags'] = $tags;
+
+        return $this;
+    }
+
+    /**
+     * Gets track_opens
+     *
+     * @return bool|null
+     */
+    public function getTrackOpens()
+    {
+        return $this->container['track_opens'];
+    }
+
+    /**
+     * Sets track_opens
+     *
+     * @param bool|null $track_opens Override the account's open-tracking setting for this one send. Omit to inherit it.  Three states matter here: `true`, `false`, and absent. A transactional receipt can set `false` without the account turning tracking off for its marketing.
+     *
+     * @return self
+     */
+    public function setTrackOpens($track_opens)
+    {
+        if (is_null($track_opens)) {
+            throw new \InvalidArgumentException('non-nullable track_opens cannot be null');
+        }
+        $this->container['track_opens'] = $track_opens;
+
+        return $this;
+    }
+
+    /**
+     * Gets track_clicks
+     *
+     * @return bool|null
+     */
+    public function getTrackClicks()
+    {
+        return $this->container['track_clicks'];
+    }
+
+    /**
+     * Sets track_clicks
+     *
+     * @param bool|null $track_clicks As `track_opens`, for click tracking. Click tracking rewrites `http(s)` links in the **HTML** part only: the plain-text part is never rewritten, because a visible redirect URL is what recipients complain about. A text-only send is therefore not click-tracked.
+     *
+     * @return self
+     */
+    public function setTrackClicks($track_clicks)
+    {
+        if (is_null($track_clicks)) {
+            throw new \InvalidArgumentException('non-nullable track_clicks cannot be null');
+        }
+        $this->container['track_clicks'] = $track_clicks;
 
         return $this;
     }

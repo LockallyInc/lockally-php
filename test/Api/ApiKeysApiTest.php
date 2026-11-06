@@ -107,4 +107,28 @@ class ApiKeysApiTest extends TestCase
         // TODO: implement
         self::markTestIncomplete('Not implemented');
     }
+
+    /**
+     * Test case for rotateApiKey
+     *
+     * Rotate an API key.
+     *
+     */
+    public function testRotateApiKey()
+    {
+        // TODO: implement
+        self::markTestIncomplete('Not implemented');
+    }
+
+    /**
+     * Test case for updateApiKey
+     *
+     * Update an API key.
+     *
+     */
+    public function testUpdateApiKey()
+    {
+        // TODO: implement
+        self::markTestIncomplete('Not implemented');
+    }
 }

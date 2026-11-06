@@ -296,9 +296,6 @@ class CreateEncryptionKeyRequest implements ModelInterface, ArrayAccess, \JsonSe
     {
         $invalidProperties = [];
 
-        if ($this->container['mailbox_email'] === null) {
-            $invalidProperties[] = "'mailbox_email' can't be null";
-        }
         if ($this->container['public_key'] === null) {
             $invalidProperties[] = "'public_key' can't be null";
         }
@@ -323,7 +320,7 @@ class CreateEncryptionKeyRequest implements ModelInterface, ArrayAccess, \JsonSe
     /**
      * Gets mailbox_email
      *
-     * @return string
+     * @return string|null
      */
     public function getMailboxEmail()
     {
@@ -333,7 +330,7 @@ class CreateEncryptionKeyRequest implements ModelInterface, ArrayAccess, \JsonSe
     /**
      * Sets mailbox_email
      *
-     * @param string $mailbox_email mailbox_email
+     * @param string|null $mailbox_email mailbox_email
      *
      * @return self
      */

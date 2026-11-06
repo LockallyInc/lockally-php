@@ -60,7 +60,8 @@ class CreateApiKeyRequest implements ModelInterface, ArrayAccess, \JsonSerializa
     protected static $openAPITypes = [
         'label' => 'string',
         'scopes' => 'string[]',
-        'test' => 'bool'
+        'test' => 'bool',
+        'expires_at' => '\DateTime'
     ];
 
     /**
@@ -73,7 +74,8 @@ class CreateApiKeyRequest implements ModelInterface, ArrayAccess, \JsonSerializa
     protected static $openAPIFormats = [
         'label' => null,
         'scopes' => null,
-        'test' => null
+        'test' => null,
+        'expires_at' => 'date-time'
     ];
 
     /**
@@ -84,7 +86,8 @@ class CreateApiKeyRequest implements ModelInterface, ArrayAccess, \JsonSerializa
     protected static array $openAPINullables = [
         'label' => false,
         'scopes' => false,
-        'test' => false
+        'test' => false,
+        'expires_at' => false
     ];
 
     /**
@@ -175,7 +178,8 @@ class CreateApiKeyRequest implements ModelInterface, ArrayAccess, \JsonSerializa
     protected static $attributeMap = [
         'label' => 'label',
         'scopes' => 'scopes',
-        'test' => 'test'
+        'test' => 'test',
+        'expires_at' => 'expires_at'
     ];
 
     /**
@@ -186,7 +190,8 @@ class CreateApiKeyRequest implements ModelInterface, ArrayAccess, \JsonSerializa
     protected static $setters = [
         'label' => 'setLabel',
         'scopes' => 'setScopes',
-        'test' => 'setTest'
+        'test' => 'setTest',
+        'expires_at' => 'setExpiresAt'
     ];
 
     /**
@@ -197,7 +202,8 @@ class CreateApiKeyRequest implements ModelInterface, ArrayAccess, \JsonSerializa
     protected static $getters = [
         'label' => 'getLabel',
         'scopes' => 'getScopes',
-        'test' => 'getTest'
+        'test' => 'getTest',
+        'expires_at' => 'getExpiresAt'
     ];
 
     /**
@@ -309,6 +315,7 @@ class CreateApiKeyRequest implements ModelInterface, ArrayAccess, \JsonSerializa
         $this->setIfExists('label', $data ?? [], null);
         $this->setIfExists('scopes', $data ?? [], null);
         $this->setIfExists('test', $data ?? [], false);
+        $this->setIfExists('expires_at', $data ?? [], null);
     }
 
     /**
@@ -454,6 +461,33 @@ class CreateApiKeyRequest implements ModelInterface, ArrayAccess, \JsonSerializa
             throw new \InvalidArgumentException('non-nullable test cannot be null');
         }
         $this->container['test'] = $test;
+
+        return $this;
+    }
+
+    /**
+     * Gets expires_at
+     *
+     * @return \DateTime|null
+     */
+    public function getExpiresAt()
+    {
+        return $this->container['expires_at'];
+    }
+
+    /**
+     * Sets expires_at
+     *
+     * @param \DateTime|null $expires_at Optional. When the key stops authenticating. Omit it for a key that does not expire. Must be in the future: an expiry already past would mint a key that fails its first request.
+     *
+     * @return self
+     */
+    public function setExpiresAt($expires_at)
+    {
+        if (is_null($expires_at)) {
+            throw new \InvalidArgumentException('non-nullable expires_at cannot be null');
+        }
+        $this->container['expires_at'] = $expires_at;
 
         return $this;
     }

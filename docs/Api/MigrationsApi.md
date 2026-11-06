@@ -90,7 +90,7 @@ try {
 ## `checkMigrationDNS()`
 
 ```php
-checkMigrationDNS($id): object
+checkMigrationDNS($id): \Lockally\SDK\Model\MigrationDNSCheck
 ```
 
 Check DNS readiness for cutover
@@ -130,7 +130,7 @@ try {
 
 ### Return type
 
-**object**
+[**\Lockally\SDK\Model\MigrationDNSCheck**](../Model/MigrationDNSCheck.md)
 
 ### Authorization
 

@@ -75,10 +75,16 @@ class ContactsApi
 
     /** @var string[] $contentTypes **/
     public const contentTypes = [
+        'bulkUpsertExternalContacts' => [
+            'application/json',
+        ],
         'createContact' => [
             'application/json',
         ],
         'deleteContact' => [
+            'application/json',
+        ],
+        'deleteExternalContact' => [
             'application/json',
         ],
         'getContact' => [
@@ -87,10 +93,16 @@ class ContactsApi
         'getContactLists' => [
             'application/json',
         ],
+        'getExternalContact' => [
+            'application/json',
+        ],
         'listContacts' => [
             'application/json',
         ],
         'updateContact' => [
+            'application/json',
+        ],
+        'upsertExternalContact' => [
             'application/json',
         ],
     ];
@@ -139,6 +151,342 @@ class ContactsApi
     public function getConfig()
     {
         return $this->config;
+    }
+
+    /**
+     * Operation bulkUpsertExternalContacts
+     *
+     * Create or update up to 500 contacts by their ids in another system
+     *
+     * @param  string $system system (required)
+     * @param  \Lockally\SDK\Model\BulkUpsertExternalContactsRequest $bulk_upsert_external_contacts_request bulk_upsert_external_contacts_request (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['bulkUpsertExternalContacts'] to see the possible values for this operation
+     *
+     * @throws \Lockally\SDK\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return \Lockally\SDK\Model\BulkUpsertExternalContacts200Response|\Lockally\SDK\Model\Problem|\Lockally\SDK\Model\Problem|\Lockally\SDK\Model\Problem
+     */
+    public function bulkUpsertExternalContacts($system, $bulk_upsert_external_contacts_request, string $contentType = self::contentTypes['bulkUpsertExternalContacts'][0])
+    {
+        list($response) = $this->bulkUpsertExternalContactsWithHttpInfo($system, $bulk_upsert_external_contacts_request, $contentType);
+        return $response;
+    }
+
+    /**
+     * Operation bulkUpsertExternalContactsWithHttpInfo
+     *
+     * Create or update up to 500 contacts by their ids in another system
+     *
+     * @param  string $system (required)
+     * @param  \Lockally\SDK\Model\BulkUpsertExternalContactsRequest $bulk_upsert_external_contacts_request (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['bulkUpsertExternalContacts'] to see the possible values for this operation
+     *
+     * @throws \Lockally\SDK\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return array of \Lockally\SDK\Model\BulkUpsertExternalContacts200Response|\Lockally\SDK\Model\Problem|\Lockally\SDK\Model\Problem|\Lockally\SDK\Model\Problem, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function bulkUpsertExternalContactsWithHttpInfo($system, $bulk_upsert_external_contacts_request, string $contentType = self::contentTypes['bulkUpsertExternalContacts'][0])
+    {
+        $request = $this->bulkUpsertExternalContactsRequest($system, $bulk_upsert_external_contacts_request, $contentType);
+
+        try {
+            $options = $this->createHttpClientOption();
+            try {
+                $response = $this->client->send($request, $options);
+            } catch (RequestException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    (int) $e->getCode(),
+                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
+                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
+                );
+            } catch (ConnectException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    (int) $e->getCode(),
+                    null,
+                    null
+                );
+            }
+
+            $statusCode = $response->getStatusCode();
+
+
+            switch($statusCode) {
+                case 200:
+                    return $this->handleResponseWithDataType(
+                        '\Lockally\SDK\Model\BulkUpsertExternalContacts200Response',
+                        $request,
+                        $response,
+                    );
+                case 400:
+                    return $this->handleResponseWithDataType(
+                        '\Lockally\SDK\Model\Problem',
+                        $request,
+                        $response,
+                    );
+                case 401:
+                    return $this->handleResponseWithDataType(
+                        '\Lockally\SDK\Model\Problem',
+                        $request,
+                        $response,
+                    );
+                case 403:
+                    return $this->handleResponseWithDataType(
+                        '\Lockally\SDK\Model\Problem',
+                        $request,
+                        $response,
+                    );
+            }
+
+            
+
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    sprintf(
+                        '[%d] Error connecting to the API (%s)',
+                        $statusCode,
+                        (string) $request->getUri()
+                    ),
+                    $statusCode,
+                    $response->getHeaders(),
+                    (string) $response->getBody()
+                );
+            }
+
+            return $this->handleResponseWithDataType(
+                '\Lockally\SDK\Model\BulkUpsertExternalContacts200Response',
+                $request,
+                $response,
+            );
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+                case 200:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Lockally\SDK\Model\BulkUpsertExternalContacts200Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 400:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Lockally\SDK\Model\Problem',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 401:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Lockally\SDK\Model\Problem',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 403:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Lockally\SDK\Model\Problem',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+            }
+        
+
+            throw $e;
+        }
+    }
+
+    /**
+     * Operation bulkUpsertExternalContactsAsync
+     *
+     * Create or update up to 500 contacts by their ids in another system
+     *
+     * @param  string $system (required)
+     * @param  \Lockally\SDK\Model\BulkUpsertExternalContactsRequest $bulk_upsert_external_contacts_request (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['bulkUpsertExternalContacts'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function bulkUpsertExternalContactsAsync($system, $bulk_upsert_external_contacts_request, string $contentType = self::contentTypes['bulkUpsertExternalContacts'][0])
+    {
+        return $this->bulkUpsertExternalContactsAsyncWithHttpInfo($system, $bulk_upsert_external_contacts_request, $contentType)
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
+    }
+
+    /**
+     * Operation bulkUpsertExternalContactsAsyncWithHttpInfo
+     *
+     * Create or update up to 500 contacts by their ids in another system
+     *
+     * @param  string $system (required)
+     * @param  \Lockally\SDK\Model\BulkUpsertExternalContactsRequest $bulk_upsert_external_contacts_request (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['bulkUpsertExternalContacts'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function bulkUpsertExternalContactsAsyncWithHttpInfo($system, $bulk_upsert_external_contacts_request, string $contentType = self::contentTypes['bulkUpsertExternalContacts'][0])
+    {
+        $returnType = '\Lockally\SDK\Model\BulkUpsertExternalContacts200Response';
+        $request = $this->bulkUpsertExternalContactsRequest($system, $bulk_upsert_external_contacts_request, $contentType);
+
+        return $this->client
+            ->sendAsync($request, $this->createHttpClientOption())
+            ->then(
+                function ($response) use ($returnType) {
+                    if ($returnType === '\SplFileObject') {
+                        $content = $response->getBody(); //stream goes to serializer
+                    } else {
+                        $content = (string) $response->getBody();
+                        if ($returnType !== 'string') {
+                            $content = json_decode($content);
+                        }
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, $returnType, []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
+                },
+                function ($exception) {
+                    $response = $exception->getResponse();
+                    $statusCode = $response->getStatusCode();
+                    throw new ApiException(
+                        sprintf(
+                            '[%d] Error connecting to the API (%s)',
+                            $statusCode,
+                            $exception->getRequest()->getUri()
+                        ),
+                        $statusCode,
+                        $response->getHeaders(),
+                        (string) $response->getBody()
+                    );
+                }
+            );
+    }
+
+    /**
+     * Create request for operation 'bulkUpsertExternalContacts'
+     *
+     * @param  string $system (required)
+     * @param  \Lockally\SDK\Model\BulkUpsertExternalContactsRequest $bulk_upsert_external_contacts_request (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['bulkUpsertExternalContacts'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    public function bulkUpsertExternalContactsRequest($system, $bulk_upsert_external_contacts_request, string $contentType = self::contentTypes['bulkUpsertExternalContacts'][0])
+    {
+
+        // verify the required parameter 'system' is set
+        if ($system === null || (is_array($system) && count($system) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $system when calling bulkUpsertExternalContacts'
+            );
+        }
+        if (!preg_match("/^[a-z0-9][a-z0-9._-]{0,63}$/", $system)) {
+            throw new \InvalidArgumentException("invalid value for \"system\" when calling ContactsApi.bulkUpsertExternalContacts, must conform to the pattern /^[a-z0-9][a-z0-9._-]{0,63}$/.");
+        }
+        
+        // verify the required parameter 'bulk_upsert_external_contacts_request' is set
+        if ($bulk_upsert_external_contacts_request === null || (is_array($bulk_upsert_external_contacts_request) && count($bulk_upsert_external_contacts_request) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $bulk_upsert_external_contacts_request when calling bulkUpsertExternalContacts'
+            );
+        }
+
+
+        $resourcePath = '/v1/contacts/external/{system}';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+
+
+        // path params
+        if ($system !== null) {
+            $resourcePath = str_replace(
+                '{system}',
+                ObjectSerializer::toPathValue($system),
+                $resourcePath
+            );
+        }
+
+
+        $headers = $this->headerSelector->selectHeaders(
+            ['application/json', 'application/problem+json', ],
+            $contentType,
+            $multipart
+        );
+
+        // for model (json/xml)
+        if (isset($bulk_upsert_external_contacts_request)) {
+            if (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the body
+                $httpBody = \GuzzleHttp\Utils::jsonEncode(ObjectSerializer::sanitizeForSerialization($bulk_upsert_external_contacts_request));
+            } else {
+                $httpBody = $bulk_upsert_external_contacts_request;
+            }
+        } elseif (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $formParamValueItems = is_array($formParamValue) ? $formParamValue : [$formParamValue];
+                    foreach ($formParamValueItems as $formParamValueItem) {
+                        $multipartContents[] = [
+                            'name' => $formParamName,
+                            'contents' => $formParamValueItem
+                        ];
+                    }
+                }
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
+
+            } elseif (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the form parameters
+                $httpBody = \GuzzleHttp\Utils::jsonEncode($formParams);
+            } else {
+                // for HTTP post (form)
+                $httpBody = ObjectSerializer::buildQuery($formParams);
+            }
+        }
+
+        // this endpoint requires Bearer (lk_live_<prefix>_<secret>) authentication (access token)
+        if (!empty($this->config->getAccessToken())) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        $operationHost = $this->config->getHost();
+        $query = ObjectSerializer::buildQuery($queryParams);
+        return new Request(
+            'PUT',
+            $operationHost . $resourcePath . ($query ? "?{$query}" : ''),
+            $headers,
+            $httpBody
+        );
     }
 
     /**
@@ -638,6 +986,278 @@ class ContactsApi
             $resourcePath = str_replace(
                 '{id}',
                 ObjectSerializer::toPathValue($id),
+                $resourcePath
+            );
+        }
+
+
+        $headers = $this->headerSelector->selectHeaders(
+            ['application/problem+json', ],
+            $contentType,
+            $multipart
+        );
+
+        // for model (json/xml)
+        if (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $formParamValueItems = is_array($formParamValue) ? $formParamValue : [$formParamValue];
+                    foreach ($formParamValueItems as $formParamValueItem) {
+                        $multipartContents[] = [
+                            'name' => $formParamName,
+                            'contents' => $formParamValueItem
+                        ];
+                    }
+                }
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
+
+            } elseif (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the form parameters
+                $httpBody = \GuzzleHttp\Utils::jsonEncode($formParams);
+            } else {
+                // for HTTP post (form)
+                $httpBody = ObjectSerializer::buildQuery($formParams);
+            }
+        }
+
+        // this endpoint requires Bearer (lk_live_<prefix>_<secret>) authentication (access token)
+        if (!empty($this->config->getAccessToken())) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        $operationHost = $this->config->getHost();
+        $query = ObjectSerializer::buildQuery($queryParams);
+        return new Request(
+            'DELETE',
+            $operationHost . $resourcePath . ($query ? "?{$query}" : ''),
+            $headers,
+            $httpBody
+        );
+    }
+
+    /**
+     * Operation deleteExternalContact
+     *
+     * Delete a contact by its id in another system
+     *
+     * @param  string $system Your label for the system the record comes from, for example &#x60;salesforce&#x60;, &#x60;hubspot&#x60; or &#x60;odoo&#x60;. 1 to 64 characters: lowercase letters, digits, dot, underscore or hyphen (upper case is folded). (required)
+     * @param  string $external_id The record&#39;s id in that system, kept exactly as given (case matters). 1 to 255 characters, no spaces. URL-encode it. (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['deleteExternalContact'] to see the possible values for this operation
+     *
+     * @throws \Lockally\SDK\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return void
+     */
+    public function deleteExternalContact($system, $external_id, string $contentType = self::contentTypes['deleteExternalContact'][0])
+    {
+        $this->deleteExternalContactWithHttpInfo($system, $external_id, $contentType);
+    }
+
+    /**
+     * Operation deleteExternalContactWithHttpInfo
+     *
+     * Delete a contact by its id in another system
+     *
+     * @param  string $system Your label for the system the record comes from, for example &#x60;salesforce&#x60;, &#x60;hubspot&#x60; or &#x60;odoo&#x60;. 1 to 64 characters: lowercase letters, digits, dot, underscore or hyphen (upper case is folded). (required)
+     * @param  string $external_id The record&#39;s id in that system, kept exactly as given (case matters). 1 to 255 characters, no spaces. URL-encode it. (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['deleteExternalContact'] to see the possible values for this operation
+     *
+     * @throws \Lockally\SDK\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return array of null, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function deleteExternalContactWithHttpInfo($system, $external_id, string $contentType = self::contentTypes['deleteExternalContact'][0])
+    {
+        $request = $this->deleteExternalContactRequest($system, $external_id, $contentType);
+
+        try {
+            $options = $this->createHttpClientOption();
+            try {
+                $response = $this->client->send($request, $options);
+            } catch (RequestException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    (int) $e->getCode(),
+                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
+                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
+                );
+            } catch (ConnectException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    (int) $e->getCode(),
+                    null,
+                    null
+                );
+            }
+
+            $statusCode = $response->getStatusCode();
+
+
+            return [null, $statusCode, $response->getHeaders()];
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+                case 401:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Lockally\SDK\Model\Problem',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 403:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Lockally\SDK\Model\Problem',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 404:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Lockally\SDK\Model\Problem',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+            }
+        
+
+            throw $e;
+        }
+    }
+
+    /**
+     * Operation deleteExternalContactAsync
+     *
+     * Delete a contact by its id in another system
+     *
+     * @param  string $system Your label for the system the record comes from, for example &#x60;salesforce&#x60;, &#x60;hubspot&#x60; or &#x60;odoo&#x60;. 1 to 64 characters: lowercase letters, digits, dot, underscore or hyphen (upper case is folded). (required)
+     * @param  string $external_id The record&#39;s id in that system, kept exactly as given (case matters). 1 to 255 characters, no spaces. URL-encode it. (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['deleteExternalContact'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function deleteExternalContactAsync($system, $external_id, string $contentType = self::contentTypes['deleteExternalContact'][0])
+    {
+        return $this->deleteExternalContactAsyncWithHttpInfo($system, $external_id, $contentType)
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
+    }
+
+    /**
+     * Operation deleteExternalContactAsyncWithHttpInfo
+     *
+     * Delete a contact by its id in another system
+     *
+     * @param  string $system Your label for the system the record comes from, for example &#x60;salesforce&#x60;, &#x60;hubspot&#x60; or &#x60;odoo&#x60;. 1 to 64 characters: lowercase letters, digits, dot, underscore or hyphen (upper case is folded). (required)
+     * @param  string $external_id The record&#39;s id in that system, kept exactly as given (case matters). 1 to 255 characters, no spaces. URL-encode it. (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['deleteExternalContact'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function deleteExternalContactAsyncWithHttpInfo($system, $external_id, string $contentType = self::contentTypes['deleteExternalContact'][0])
+    {
+        $returnType = '';
+        $request = $this->deleteExternalContactRequest($system, $external_id, $contentType);
+
+        return $this->client
+            ->sendAsync($request, $this->createHttpClientOption())
+            ->then(
+                function ($response) use ($returnType) {
+                    return [null, $response->getStatusCode(), $response->getHeaders()];
+                },
+                function ($exception) {
+                    $response = $exception->getResponse();
+                    $statusCode = $response->getStatusCode();
+                    throw new ApiException(
+                        sprintf(
+                            '[%d] Error connecting to the API (%s)',
+                            $statusCode,
+                            $exception->getRequest()->getUri()
+                        ),
+                        $statusCode,
+                        $response->getHeaders(),
+                        (string) $response->getBody()
+                    );
+                }
+            );
+    }
+
+    /**
+     * Create request for operation 'deleteExternalContact'
+     *
+     * @param  string $system Your label for the system the record comes from, for example &#x60;salesforce&#x60;, &#x60;hubspot&#x60; or &#x60;odoo&#x60;. 1 to 64 characters: lowercase letters, digits, dot, underscore or hyphen (upper case is folded). (required)
+     * @param  string $external_id The record&#39;s id in that system, kept exactly as given (case matters). 1 to 255 characters, no spaces. URL-encode it. (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['deleteExternalContact'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    public function deleteExternalContactRequest($system, $external_id, string $contentType = self::contentTypes['deleteExternalContact'][0])
+    {
+
+        // verify the required parameter 'system' is set
+        if ($system === null || (is_array($system) && count($system) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $system when calling deleteExternalContact'
+            );
+        }
+        if (!preg_match("/^[a-z0-9][a-z0-9._-]{0,63}$/", $system)) {
+            throw new \InvalidArgumentException("invalid value for \"system\" when calling ContactsApi.deleteExternalContact, must conform to the pattern /^[a-z0-9][a-z0-9._-]{0,63}$/.");
+        }
+        
+        // verify the required parameter 'external_id' is set
+        if ($external_id === null || (is_array($external_id) && count($external_id) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $external_id when calling deleteExternalContact'
+            );
+        }
+        if (strlen($external_id) > 255) {
+            throw new \InvalidArgumentException('invalid length for "$external_id" when calling ContactsApi.deleteExternalContact, must be smaller than or equal to 255.');
+        }
+        
+
+        $resourcePath = '/v1/contacts/external/{system}/{external_id}';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+
+
+        // path params
+        if ($system !== null) {
+            $resourcePath = str_replace(
+                '{system}',
+                ObjectSerializer::toPathValue($system),
+                $resourcePath
+            );
+        }
+        // path params
+        if ($external_id !== null) {
+            $resourcePath = str_replace(
+                '{external_id}',
+                ObjectSerializer::toPathValue($external_id),
                 $resourcePath
             );
         }
@@ -1266,6 +1886,346 @@ class ContactsApi
             $resourcePath = str_replace(
                 '{id}',
                 ObjectSerializer::toPathValue($id),
+                $resourcePath
+            );
+        }
+
+
+        $headers = $this->headerSelector->selectHeaders(
+            ['application/json', 'application/problem+json', ],
+            $contentType,
+            $multipart
+        );
+
+        // for model (json/xml)
+        if (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $formParamValueItems = is_array($formParamValue) ? $formParamValue : [$formParamValue];
+                    foreach ($formParamValueItems as $formParamValueItem) {
+                        $multipartContents[] = [
+                            'name' => $formParamName,
+                            'contents' => $formParamValueItem
+                        ];
+                    }
+                }
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
+
+            } elseif (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the form parameters
+                $httpBody = \GuzzleHttp\Utils::jsonEncode($formParams);
+            } else {
+                // for HTTP post (form)
+                $httpBody = ObjectSerializer::buildQuery($formParams);
+            }
+        }
+
+        // this endpoint requires Bearer (lk_live_<prefix>_<secret>) authentication (access token)
+        if (!empty($this->config->getAccessToken())) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        $operationHost = $this->config->getHost();
+        $query = ObjectSerializer::buildQuery($queryParams);
+        return new Request(
+            'GET',
+            $operationHost . $resourcePath . ($query ? "?{$query}" : ''),
+            $headers,
+            $httpBody
+        );
+    }
+
+    /**
+     * Operation getExternalContact
+     *
+     * Get a contact by its id in another system
+     *
+     * @param  string $system Your label for the system the record comes from, for example &#x60;salesforce&#x60;, &#x60;hubspot&#x60; or &#x60;odoo&#x60;. 1 to 64 characters: lowercase letters, digits, dot, underscore or hyphen (upper case is folded). (required)
+     * @param  string $external_id The record&#39;s id in that system, kept exactly as given (case matters). 1 to 255 characters, no spaces. URL-encode it. (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getExternalContact'] to see the possible values for this operation
+     *
+     * @throws \Lockally\SDK\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return \Lockally\SDK\Model\Contact|\Lockally\SDK\Model\Problem|\Lockally\SDK\Model\Problem|\Lockally\SDK\Model\Problem
+     */
+    public function getExternalContact($system, $external_id, string $contentType = self::contentTypes['getExternalContact'][0])
+    {
+        list($response) = $this->getExternalContactWithHttpInfo($system, $external_id, $contentType);
+        return $response;
+    }
+
+    /**
+     * Operation getExternalContactWithHttpInfo
+     *
+     * Get a contact by its id in another system
+     *
+     * @param  string $system Your label for the system the record comes from, for example &#x60;salesforce&#x60;, &#x60;hubspot&#x60; or &#x60;odoo&#x60;. 1 to 64 characters: lowercase letters, digits, dot, underscore or hyphen (upper case is folded). (required)
+     * @param  string $external_id The record&#39;s id in that system, kept exactly as given (case matters). 1 to 255 characters, no spaces. URL-encode it. (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getExternalContact'] to see the possible values for this operation
+     *
+     * @throws \Lockally\SDK\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return array of \Lockally\SDK\Model\Contact|\Lockally\SDK\Model\Problem|\Lockally\SDK\Model\Problem|\Lockally\SDK\Model\Problem, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function getExternalContactWithHttpInfo($system, $external_id, string $contentType = self::contentTypes['getExternalContact'][0])
+    {
+        $request = $this->getExternalContactRequest($system, $external_id, $contentType);
+
+        try {
+            $options = $this->createHttpClientOption();
+            try {
+                $response = $this->client->send($request, $options);
+            } catch (RequestException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    (int) $e->getCode(),
+                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
+                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
+                );
+            } catch (ConnectException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    (int) $e->getCode(),
+                    null,
+                    null
+                );
+            }
+
+            $statusCode = $response->getStatusCode();
+
+
+            switch($statusCode) {
+                case 200:
+                    return $this->handleResponseWithDataType(
+                        '\Lockally\SDK\Model\Contact',
+                        $request,
+                        $response,
+                    );
+                case 401:
+                    return $this->handleResponseWithDataType(
+                        '\Lockally\SDK\Model\Problem',
+                        $request,
+                        $response,
+                    );
+                case 403:
+                    return $this->handleResponseWithDataType(
+                        '\Lockally\SDK\Model\Problem',
+                        $request,
+                        $response,
+                    );
+                case 404:
+                    return $this->handleResponseWithDataType(
+                        '\Lockally\SDK\Model\Problem',
+                        $request,
+                        $response,
+                    );
+            }
+
+            
+
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    sprintf(
+                        '[%d] Error connecting to the API (%s)',
+                        $statusCode,
+                        (string) $request->getUri()
+                    ),
+                    $statusCode,
+                    $response->getHeaders(),
+                    (string) $response->getBody()
+                );
+            }
+
+            return $this->handleResponseWithDataType(
+                '\Lockally\SDK\Model\Contact',
+                $request,
+                $response,
+            );
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+                case 200:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Lockally\SDK\Model\Contact',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 401:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Lockally\SDK\Model\Problem',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 403:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Lockally\SDK\Model\Problem',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 404:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Lockally\SDK\Model\Problem',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+            }
+        
+
+            throw $e;
+        }
+    }
+
+    /**
+     * Operation getExternalContactAsync
+     *
+     * Get a contact by its id in another system
+     *
+     * @param  string $system Your label for the system the record comes from, for example &#x60;salesforce&#x60;, &#x60;hubspot&#x60; or &#x60;odoo&#x60;. 1 to 64 characters: lowercase letters, digits, dot, underscore or hyphen (upper case is folded). (required)
+     * @param  string $external_id The record&#39;s id in that system, kept exactly as given (case matters). 1 to 255 characters, no spaces. URL-encode it. (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getExternalContact'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function getExternalContactAsync($system, $external_id, string $contentType = self::contentTypes['getExternalContact'][0])
+    {
+        return $this->getExternalContactAsyncWithHttpInfo($system, $external_id, $contentType)
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
+    }
+
+    /**
+     * Operation getExternalContactAsyncWithHttpInfo
+     *
+     * Get a contact by its id in another system
+     *
+     * @param  string $system Your label for the system the record comes from, for example &#x60;salesforce&#x60;, &#x60;hubspot&#x60; or &#x60;odoo&#x60;. 1 to 64 characters: lowercase letters, digits, dot, underscore or hyphen (upper case is folded). (required)
+     * @param  string $external_id The record&#39;s id in that system, kept exactly as given (case matters). 1 to 255 characters, no spaces. URL-encode it. (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getExternalContact'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function getExternalContactAsyncWithHttpInfo($system, $external_id, string $contentType = self::contentTypes['getExternalContact'][0])
+    {
+        $returnType = '\Lockally\SDK\Model\Contact';
+        $request = $this->getExternalContactRequest($system, $external_id, $contentType);
+
+        return $this->client
+            ->sendAsync($request, $this->createHttpClientOption())
+            ->then(
+                function ($response) use ($returnType) {
+                    if ($returnType === '\SplFileObject') {
+                        $content = $response->getBody(); //stream goes to serializer
+                    } else {
+                        $content = (string) $response->getBody();
+                        if ($returnType !== 'string') {
+                            $content = json_decode($content);
+                        }
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, $returnType, []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
+                },
+                function ($exception) {
+                    $response = $exception->getResponse();
+                    $statusCode = $response->getStatusCode();
+                    throw new ApiException(
+                        sprintf(
+                            '[%d] Error connecting to the API (%s)',
+                            $statusCode,
+                            $exception->getRequest()->getUri()
+                        ),
+                        $statusCode,
+                        $response->getHeaders(),
+                        (string) $response->getBody()
+                    );
+                }
+            );
+    }
+
+    /**
+     * Create request for operation 'getExternalContact'
+     *
+     * @param  string $system Your label for the system the record comes from, for example &#x60;salesforce&#x60;, &#x60;hubspot&#x60; or &#x60;odoo&#x60;. 1 to 64 characters: lowercase letters, digits, dot, underscore or hyphen (upper case is folded). (required)
+     * @param  string $external_id The record&#39;s id in that system, kept exactly as given (case matters). 1 to 255 characters, no spaces. URL-encode it. (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getExternalContact'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    public function getExternalContactRequest($system, $external_id, string $contentType = self::contentTypes['getExternalContact'][0])
+    {
+
+        // verify the required parameter 'system' is set
+        if ($system === null || (is_array($system) && count($system) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $system when calling getExternalContact'
+            );
+        }
+        if (!preg_match("/^[a-z0-9][a-z0-9._-]{0,63}$/", $system)) {
+            throw new \InvalidArgumentException("invalid value for \"system\" when calling ContactsApi.getExternalContact, must conform to the pattern /^[a-z0-9][a-z0-9._-]{0,63}$/.");
+        }
+        
+        // verify the required parameter 'external_id' is set
+        if ($external_id === null || (is_array($external_id) && count($external_id) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $external_id when calling getExternalContact'
+            );
+        }
+        if (strlen($external_id) > 255) {
+            throw new \InvalidArgumentException('invalid length for "$external_id" when calling ContactsApi.getExternalContact, must be smaller than or equal to 255.');
+        }
+        
+
+        $resourcePath = '/v1/contacts/external/{system}/{external_id}';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+
+
+        // path params
+        if ($system !== null) {
+            $resourcePath = str_replace(
+                '{system}',
+                ObjectSerializer::toPathValue($system),
+                $resourcePath
+            );
+        }
+        // path params
+        if ($external_id !== null) {
+            $resourcePath = str_replace(
+                '{external_id}',
+                ObjectSerializer::toPathValue($external_id),
                 $resourcePath
             );
         }
@@ -2024,6 +2984,379 @@ class ContactsApi
         $query = ObjectSerializer::buildQuery($queryParams);
         return new Request(
             'PATCH',
+            $operationHost . $resourcePath . ($query ? "?{$query}" : ''),
+            $headers,
+            $httpBody
+        );
+    }
+
+    /**
+     * Operation upsertExternalContact
+     *
+     * Create or update a contact by its id in another system
+     *
+     * @param  string $system Your label for the system the record comes from, for example &#x60;salesforce&#x60;, &#x60;hubspot&#x60; or &#x60;odoo&#x60;. 1 to 64 characters: lowercase letters, digits, dot, underscore or hyphen (upper case is folded). (required)
+     * @param  string $external_id The record&#39;s id in that system, kept exactly as given (case matters). 1 to 255 characters, no spaces. URL-encode it. (required)
+     * @param  \Lockally\SDK\Model\ExternalContactInput $external_contact_input external_contact_input (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['upsertExternalContact'] to see the possible values for this operation
+     *
+     * @throws \Lockally\SDK\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return \Lockally\SDK\Model\Contact|\Lockally\SDK\Model\Contact|\Lockally\SDK\Model\Problem|\Lockally\SDK\Model\Problem|\Lockally\SDK\Model\Problem
+     */
+    public function upsertExternalContact($system, $external_id, $external_contact_input, string $contentType = self::contentTypes['upsertExternalContact'][0])
+    {
+        list($response) = $this->upsertExternalContactWithHttpInfo($system, $external_id, $external_contact_input, $contentType);
+        return $response;
+    }
+
+    /**
+     * Operation upsertExternalContactWithHttpInfo
+     *
+     * Create or update a contact by its id in another system
+     *
+     * @param  string $system Your label for the system the record comes from, for example &#x60;salesforce&#x60;, &#x60;hubspot&#x60; or &#x60;odoo&#x60;. 1 to 64 characters: lowercase letters, digits, dot, underscore or hyphen (upper case is folded). (required)
+     * @param  string $external_id The record&#39;s id in that system, kept exactly as given (case matters). 1 to 255 characters, no spaces. URL-encode it. (required)
+     * @param  \Lockally\SDK\Model\ExternalContactInput $external_contact_input (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['upsertExternalContact'] to see the possible values for this operation
+     *
+     * @throws \Lockally\SDK\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return array of \Lockally\SDK\Model\Contact|\Lockally\SDK\Model\Contact|\Lockally\SDK\Model\Problem|\Lockally\SDK\Model\Problem|\Lockally\SDK\Model\Problem, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function upsertExternalContactWithHttpInfo($system, $external_id, $external_contact_input, string $contentType = self::contentTypes['upsertExternalContact'][0])
+    {
+        $request = $this->upsertExternalContactRequest($system, $external_id, $external_contact_input, $contentType);
+
+        try {
+            $options = $this->createHttpClientOption();
+            try {
+                $response = $this->client->send($request, $options);
+            } catch (RequestException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    (int) $e->getCode(),
+                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
+                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
+                );
+            } catch (ConnectException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    (int) $e->getCode(),
+                    null,
+                    null
+                );
+            }
+
+            $statusCode = $response->getStatusCode();
+
+
+            switch($statusCode) {
+                case 200:
+                    return $this->handleResponseWithDataType(
+                        '\Lockally\SDK\Model\Contact',
+                        $request,
+                        $response,
+                    );
+                case 201:
+                    return $this->handleResponseWithDataType(
+                        '\Lockally\SDK\Model\Contact',
+                        $request,
+                        $response,
+                    );
+                case 400:
+                    return $this->handleResponseWithDataType(
+                        '\Lockally\SDK\Model\Problem',
+                        $request,
+                        $response,
+                    );
+                case 401:
+                    return $this->handleResponseWithDataType(
+                        '\Lockally\SDK\Model\Problem',
+                        $request,
+                        $response,
+                    );
+                case 403:
+                    return $this->handleResponseWithDataType(
+                        '\Lockally\SDK\Model\Problem',
+                        $request,
+                        $response,
+                    );
+            }
+
+            
+
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    sprintf(
+                        '[%d] Error connecting to the API (%s)',
+                        $statusCode,
+                        (string) $request->getUri()
+                    ),
+                    $statusCode,
+                    $response->getHeaders(),
+                    (string) $response->getBody()
+                );
+            }
+
+            return $this->handleResponseWithDataType(
+                '\Lockally\SDK\Model\Contact',
+                $request,
+                $response,
+            );
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+                case 200:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Lockally\SDK\Model\Contact',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 201:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Lockally\SDK\Model\Contact',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 400:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Lockally\SDK\Model\Problem',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 401:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Lockally\SDK\Model\Problem',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 403:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Lockally\SDK\Model\Problem',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+            }
+        
+
+            throw $e;
+        }
+    }
+
+    /**
+     * Operation upsertExternalContactAsync
+     *
+     * Create or update a contact by its id in another system
+     *
+     * @param  string $system Your label for the system the record comes from, for example &#x60;salesforce&#x60;, &#x60;hubspot&#x60; or &#x60;odoo&#x60;. 1 to 64 characters: lowercase letters, digits, dot, underscore or hyphen (upper case is folded). (required)
+     * @param  string $external_id The record&#39;s id in that system, kept exactly as given (case matters). 1 to 255 characters, no spaces. URL-encode it. (required)
+     * @param  \Lockally\SDK\Model\ExternalContactInput $external_contact_input (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['upsertExternalContact'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function upsertExternalContactAsync($system, $external_id, $external_contact_input, string $contentType = self::contentTypes['upsertExternalContact'][0])
+    {
+        return $this->upsertExternalContactAsyncWithHttpInfo($system, $external_id, $external_contact_input, $contentType)
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
+    }
+
+    /**
+     * Operation upsertExternalContactAsyncWithHttpInfo
+     *
+     * Create or update a contact by its id in another system
+     *
+     * @param  string $system Your label for the system the record comes from, for example &#x60;salesforce&#x60;, &#x60;hubspot&#x60; or &#x60;odoo&#x60;. 1 to 64 characters: lowercase letters, digits, dot, underscore or hyphen (upper case is folded). (required)
+     * @param  string $external_id The record&#39;s id in that system, kept exactly as given (case matters). 1 to 255 characters, no spaces. URL-encode it. (required)
+     * @param  \Lockally\SDK\Model\ExternalContactInput $external_contact_input (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['upsertExternalContact'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function upsertExternalContactAsyncWithHttpInfo($system, $external_id, $external_contact_input, string $contentType = self::contentTypes['upsertExternalContact'][0])
+    {
+        $returnType = '\Lockally\SDK\Model\Contact';
+        $request = $this->upsertExternalContactRequest($system, $external_id, $external_contact_input, $contentType);
+
+        return $this->client
+            ->sendAsync($request, $this->createHttpClientOption())
+            ->then(
+                function ($response) use ($returnType) {
+                    if ($returnType === '\SplFileObject') {
+                        $content = $response->getBody(); //stream goes to serializer
+                    } else {
+                        $content = (string) $response->getBody();
+                        if ($returnType !== 'string') {
+                            $content = json_decode($content);
+                        }
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, $returnType, []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
+                },
+                function ($exception) {
+                    $response = $exception->getResponse();
+                    $statusCode = $response->getStatusCode();
+                    throw new ApiException(
+                        sprintf(
+                            '[%d] Error connecting to the API (%s)',
+                            $statusCode,
+                            $exception->getRequest()->getUri()
+                        ),
+                        $statusCode,
+                        $response->getHeaders(),
+                        (string) $response->getBody()
+                    );
+                }
+            );
+    }
+
+    /**
+     * Create request for operation 'upsertExternalContact'
+     *
+     * @param  string $system Your label for the system the record comes from, for example &#x60;salesforce&#x60;, &#x60;hubspot&#x60; or &#x60;odoo&#x60;. 1 to 64 characters: lowercase letters, digits, dot, underscore or hyphen (upper case is folded). (required)
+     * @param  string $external_id The record&#39;s id in that system, kept exactly as given (case matters). 1 to 255 characters, no spaces. URL-encode it. (required)
+     * @param  \Lockally\SDK\Model\ExternalContactInput $external_contact_input (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['upsertExternalContact'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    public function upsertExternalContactRequest($system, $external_id, $external_contact_input, string $contentType = self::contentTypes['upsertExternalContact'][0])
+    {
+
+        // verify the required parameter 'system' is set
+        if ($system === null || (is_array($system) && count($system) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $system when calling upsertExternalContact'
+            );
+        }
+        if (!preg_match("/^[a-z0-9][a-z0-9._-]{0,63}$/", $system)) {
+            throw new \InvalidArgumentException("invalid value for \"system\" when calling ContactsApi.upsertExternalContact, must conform to the pattern /^[a-z0-9][a-z0-9._-]{0,63}$/.");
+        }
+        
+        // verify the required parameter 'external_id' is set
+        if ($external_id === null || (is_array($external_id) && count($external_id) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $external_id when calling upsertExternalContact'
+            );
+        }
+        if (strlen($external_id) > 255) {
+            throw new \InvalidArgumentException('invalid length for "$external_id" when calling ContactsApi.upsertExternalContact, must be smaller than or equal to 255.');
+        }
+        
+        // verify the required parameter 'external_contact_input' is set
+        if ($external_contact_input === null || (is_array($external_contact_input) && count($external_contact_input) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $external_contact_input when calling upsertExternalContact'
+            );
+        }
+
+
+        $resourcePath = '/v1/contacts/external/{system}/{external_id}';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+
+
+        // path params
+        if ($system !== null) {
+            $resourcePath = str_replace(
+                '{system}',
+                ObjectSerializer::toPathValue($system),
+                $resourcePath
+            );
+        }
+        // path params
+        if ($external_id !== null) {
+            $resourcePath = str_replace(
+                '{external_id}',
+                ObjectSerializer::toPathValue($external_id),
+                $resourcePath
+            );
+        }
+
+
+        $headers = $this->headerSelector->selectHeaders(
+            ['application/json', 'application/problem+json', ],
+            $contentType,
+            $multipart
+        );
+
+        // for model (json/xml)
+        if (isset($external_contact_input)) {
+            if (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the body
+                $httpBody = \GuzzleHttp\Utils::jsonEncode(ObjectSerializer::sanitizeForSerialization($external_contact_input));
+            } else {
+                $httpBody = $external_contact_input;
+            }
+        } elseif (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $formParamValueItems = is_array($formParamValue) ? $formParamValue : [$formParamValue];
+                    foreach ($formParamValueItems as $formParamValueItem) {
+                        $multipartContents[] = [
+                            'name' => $formParamName,
+                            'contents' => $formParamValueItem
+                        ];
+                    }
+                }
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
+
+            } elseif (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the form parameters
+                $httpBody = \GuzzleHttp\Utils::jsonEncode($formParams);
+            } else {
+                // for HTTP post (form)
+                $httpBody = ObjectSerializer::buildQuery($formParams);
+            }
+        }
+
+        // this endpoint requires Bearer (lk_live_<prefix>_<secret>) authentication (access token)
+        if (!empty($this->config->getAccessToken())) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        $operationHost = $this->config->getHost();
+        $query = ObjectSerializer::buildQuery($queryParams);
+        return new Request(
+            'PUT',
             $operationHost . $resourcePath . ($query ? "?{$query}" : ''),
             $headers,
             $httpBody

@@ -134,7 +134,7 @@ try {
 ## `getMessageStats()`
 
 ```php
-getMessageStats($from, $to, $domain): \Lockally\SDK\Model\MessageStats
+getMessageStats($from, $to, $domain, $tag): \Lockally\SDK\Model\MessageStats
 ```
 
 Aggregate delivery stats
@@ -161,9 +161,10 @@ $apiInstance = new Lockally\SDK\Api\SendApi(
 $from = new \DateTime('2013-10-20T19:20:30+01:00'); // \DateTime | Window start (default 7 days ago).
 $to = new \DateTime('2013-10-20T19:20:30+01:00'); // \DateTime | Window end (default now).
 $domain = 'domain_example'; // string | Filter by sender domain.
+$tag = 'tag_example'; // string | Group the window by the sender's own tags: one tag, or a comma-separated set meaning ANY. Case-insensitive. This is the dimension that tells a transactional stream from a notification one.
 
 try {
-    $result = $apiInstance->getMessageStats($from, $to, $domain);
+    $result = $apiInstance->getMessageStats($from, $to, $domain, $tag);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling SendApi->getMessageStats: ', $e->getMessage(), PHP_EOL;
@@ -177,6 +178,7 @@ try {
 | **from** | **\DateTime**| Window start (default 7 days ago). | [optional] |
 | **to** | **\DateTime**| Window end (default now). | [optional] |
 | **domain** | **string**| Filter by sender domain. | [optional] |
+| **tag** | **string**| Group the window by the sender&#39;s own tags: one tag, or a comma-separated set meaning ANY. Case-insensitive. This is the dimension that tells a transactional stream from a notification one. | [optional] |
 
 ### Return type
 
@@ -198,7 +200,7 @@ try {
 ## `listMessages()`
 
 ```php
-listMessages($status, $sender, $q, $since, $cursor, $limit): \Lockally\SDK\Model\ListMessages200Response
+listMessages($status, $sender, $tag, $q, $since, $cursor, $limit, $sort, $order): \Lockally\SDK\Model\ListMessages200Response
 ```
 
 List outbound messages
@@ -224,13 +226,16 @@ $apiInstance = new Lockally\SDK\Api\SendApi(
 );
 $status = 'status_example'; // string
 $sender = 'sender_example'; // string | Exact match against the `from` mailbox.
+$tag = 'tag_example'; // string | Filter to messages carrying any of these tags. One tag, or a comma-separated set meaning ANY. Case-insensitive: the value is normalised the same way tags are on write.
 $q = 'q_example'; // string | Free-text search across subject + sender.
 $since = new \DateTime('2013-10-20T19:20:30+01:00'); // \DateTime | Only messages queued at or after this RFC 3339 instant.
 $cursor = 'cursor_example'; // string | queued_at of the prior page boundary. Pass back the `next_cursor` returned by the previous call.
 $limit = 50; // int
+$sort = 'queued_at'; // string | Field to order by. Only indexed columns are offered: an unindexed sort on this table is a full scan of the account's send history. status and sender are filters instead.
+$order = 'order_example'; // string | Defaults to desc for the default field and asc for any other. The order is always made total by a tie-break on id, so paging cannot repeat or skip a row that shares a timestamp. cursor encodes queued_at, so combining it with another sort is a 400 rather than a wrong page.
 
 try {
-    $result = $apiInstance->listMessages($status, $sender, $q, $since, $cursor, $limit);
+    $result = $apiInstance->listMessages($status, $sender, $tag, $q, $since, $cursor, $limit, $sort, $order);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling SendApi->listMessages: ', $e->getMessage(), PHP_EOL;
@@ -243,10 +248,13 @@ try {
 | ------------- | ------------- | ------------- | ------------- |
 | **status** | **string**|  | [optional] |
 | **sender** | **string**| Exact match against the &#x60;from&#x60; mailbox. | [optional] |
+| **tag** | **string**| Filter to messages carrying any of these tags. One tag, or a comma-separated set meaning ANY. Case-insensitive: the value is normalised the same way tags are on write. | [optional] |
 | **q** | **string**| Free-text search across subject + sender. | [optional] |
 | **since** | **\DateTime**| Only messages queued at or after this RFC 3339 instant. | [optional] |
 | **cursor** | **string**| queued_at of the prior page boundary. Pass back the &#x60;next_cursor&#x60; returned by the previous call. | [optional] |
 | **limit** | **int**|  | [optional] [default to 50] |
+| **sort** | **string**| Field to order by. Only indexed columns are offered: an unindexed sort on this table is a full scan of the account&#39;s send history. status and sender are filters instead. | [optional] [default to &#39;queued_at&#39;] |
+| **order** | **string**| Defaults to desc for the default field and asc for any other. The order is always made total by a tie-break on id, so paging cannot repeat or skip a row that shares a timestamp. cursor encodes queued_at, so combining it with another sort is a 400 rather than a wrong page. | [optional] |
 
 ### Return type
 

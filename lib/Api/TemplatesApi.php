@@ -972,15 +972,17 @@ class TemplatesApi
      *
      * List templates
      *
+     * @param  string|null $sort Field to order by. This list holds tens of rows per account, so every column is offered and none needs an index. (optional, default to 'name')
+     * @param  string|null $order Defaults to asc for the default field and asc for any other. Always tie-broken on id, so the order is total. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listTemplates'] to see the possible values for this operation
      *
      * @throws \Lockally\SDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return \Lockally\SDK\Model\ListTemplates200Response|\Lockally\SDK\Model\Problem|\Lockally\SDK\Model\Problem
      */
-    public function listTemplates(string $contentType = self::contentTypes['listTemplates'][0])
+    public function listTemplates($sort = 'name', $order = null, string $contentType = self::contentTypes['listTemplates'][0])
     {
-        list($response) = $this->listTemplatesWithHttpInfo($contentType);
+        list($response) = $this->listTemplatesWithHttpInfo($sort, $order, $contentType);
         return $response;
     }
 
@@ -989,15 +991,17 @@ class TemplatesApi
      *
      * List templates
      *
+     * @param  string|null $sort Field to order by. This list holds tens of rows per account, so every column is offered and none needs an index. (optional, default to 'name')
+     * @param  string|null $order Defaults to asc for the default field and asc for any other. Always tie-broken on id, so the order is total. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listTemplates'] to see the possible values for this operation
      *
      * @throws \Lockally\SDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of \Lockally\SDK\Model\ListTemplates200Response|\Lockally\SDK\Model\Problem|\Lockally\SDK\Model\Problem, HTTP status code, HTTP response headers (array of strings)
      */
-    public function listTemplatesWithHttpInfo(string $contentType = self::contentTypes['listTemplates'][0])
+    public function listTemplatesWithHttpInfo($sort = 'name', $order = null, string $contentType = self::contentTypes['listTemplates'][0])
     {
-        $request = $this->listTemplatesRequest($contentType);
+        $request = $this->listTemplatesRequest($sort, $order, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -1101,14 +1105,16 @@ class TemplatesApi
      *
      * List templates
      *
+     * @param  string|null $sort Field to order by. This list holds tens of rows per account, so every column is offered and none needs an index. (optional, default to 'name')
+     * @param  string|null $order Defaults to asc for the default field and asc for any other. Always tie-broken on id, so the order is total. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listTemplates'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function listTemplatesAsync(string $contentType = self::contentTypes['listTemplates'][0])
+    public function listTemplatesAsync($sort = 'name', $order = null, string $contentType = self::contentTypes['listTemplates'][0])
     {
-        return $this->listTemplatesAsyncWithHttpInfo($contentType)
+        return $this->listTemplatesAsyncWithHttpInfo($sort, $order, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -1121,15 +1127,17 @@ class TemplatesApi
      *
      * List templates
      *
+     * @param  string|null $sort Field to order by. This list holds tens of rows per account, so every column is offered and none needs an index. (optional, default to 'name')
+     * @param  string|null $order Defaults to asc for the default field and asc for any other. Always tie-broken on id, so the order is total. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listTemplates'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function listTemplatesAsyncWithHttpInfo(string $contentType = self::contentTypes['listTemplates'][0])
+    public function listTemplatesAsyncWithHttpInfo($sort = 'name', $order = null, string $contentType = self::contentTypes['listTemplates'][0])
     {
         $returnType = '\Lockally\SDK\Model\ListTemplates200Response';
-        $request = $this->listTemplatesRequest($contentType);
+        $request = $this->listTemplatesRequest($sort, $order, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -1170,13 +1178,17 @@ class TemplatesApi
     /**
      * Create request for operation 'listTemplates'
      *
+     * @param  string|null $sort Field to order by. This list holds tens of rows per account, so every column is offered and none needs an index. (optional, default to 'name')
+     * @param  string|null $order Defaults to asc for the default field and asc for any other. Always tie-broken on id, so the order is total. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listTemplates'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function listTemplatesRequest(string $contentType = self::contentTypes['listTemplates'][0])
+    public function listTemplatesRequest($sort = 'name', $order = null, string $contentType = self::contentTypes['listTemplates'][0])
     {
+
+
 
 
         $resourcePath = '/v1/templates';
@@ -1186,6 +1198,24 @@ class TemplatesApi
         $httpBody = '';
         $multipart = false;
 
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $sort,
+            'sort', // param base name
+            'string', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $order,
+            'order', // param base name
+            'string', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
 
 
 

@@ -1553,7 +1553,7 @@ class DashboardApi
      *
      * @throws \Lockally\SDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return object|\Lockally\SDK\Model\Problem|\Lockally\SDK\Model\Problem
+     * @return \Lockally\SDK\Model\TenantHealthReport|\Lockally\SDK\Model\Problem|\Lockally\SDK\Model\Problem
      */
     public function getTenantHealth(string $contentType = self::contentTypes['getTenantHealth'][0])
     {
@@ -1570,7 +1570,7 @@ class DashboardApi
      *
      * @throws \Lockally\SDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of object|\Lockally\SDK\Model\Problem|\Lockally\SDK\Model\Problem, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Lockally\SDK\Model\TenantHealthReport|\Lockally\SDK\Model\Problem|\Lockally\SDK\Model\Problem, HTTP status code, HTTP response headers (array of strings)
      */
     public function getTenantHealthWithHttpInfo(string $contentType = self::contentTypes['getTenantHealth'][0])
     {
@@ -1602,7 +1602,7 @@ class DashboardApi
             switch($statusCode) {
                 case 200:
                     return $this->handleResponseWithDataType(
-                        'object',
+                        '\Lockally\SDK\Model\TenantHealthReport',
                         $request,
                         $response,
                     );
@@ -1636,7 +1636,7 @@ class DashboardApi
             }
 
             return $this->handleResponseWithDataType(
-                'object',
+                '\Lockally\SDK\Model\TenantHealthReport',
                 $request,
                 $response,
             );
@@ -1645,7 +1645,7 @@ class DashboardApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        'object',
+                        '\Lockally\SDK\Model\TenantHealthReport',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1705,7 +1705,7 @@ class DashboardApi
      */
     public function getTenantHealthAsyncWithHttpInfo(string $contentType = self::contentTypes['getTenantHealth'][0])
     {
-        $returnType = 'object';
+        $returnType = '\Lockally\SDK\Model\TenantHealthReport';
         $request = $this->getTenantHealthRequest($contentType);
 
         return $this->client

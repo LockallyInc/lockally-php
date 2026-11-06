@@ -88,4 +88,13 @@ class SendEmailBatchRequestTest extends TestCase
         // TODO: implement
         self::markTestIncomplete('Not implemented');
     }
+
+    /**
+     * Test attribute "variables"
+     */
+    public function testPropertyVariables()
+    {
+        // TODO: implement
+        self::markTestIncomplete('Not implemented');
+    }
 }

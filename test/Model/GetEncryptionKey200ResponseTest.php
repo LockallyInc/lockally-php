@@ -133,4 +133,49 @@ class GetEncryptionKey200ResponseTest extends TestCase
         // TODO: implement
         self::markTestIncomplete('Not implemented');
     }
+
+    /**
+     * Test attribute "created_at"
+     */
+    public function testPropertyCreatedAt()
+    {
+        // TODO: implement
+        self::markTestIncomplete('Not implemented');
+    }
+
+    /**
+     * Test attribute "rotated_at"
+     */
+    public function testPropertyRotatedAt()
+    {
+        // TODO: implement
+        self::markTestIncomplete('Not implemented');
+    }
+
+    /**
+     * Test attribute "has_recovery"
+     */
+    public function testPropertyHasRecovery()
+    {
+        // TODO: implement
+        self::markTestIncomplete('Not implemented');
+    }
+
+    /**
+     * Test attribute "recovery_set_at"
+     */
+    public function testPropertyRecoverySetAt()
+    {
+        // TODO: implement
+        self::markTestIncomplete('Not implemented');
+    }
+
+    /**
+     * Test attribute "recovery_blob"
+     */
+    public function testPropertyRecoveryBlob()
+    {
+        // TODO: implement
+        self::markTestIncomplete('Not implemented');
+    }
 }

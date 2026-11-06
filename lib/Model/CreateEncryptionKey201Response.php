@@ -60,7 +60,8 @@ class CreateEncryptionKey201Response implements ModelInterface, ArrayAccess, \Js
     protected static $openAPITypes = [
         'id' => 'string',
         'mailbox_id' => 'string',
-        'created_at' => '\DateTime'
+        'created_at' => '\DateTime',
+        'replaced_old' => 'bool'
     ];
 
     /**
@@ -73,7 +74,8 @@ class CreateEncryptionKey201Response implements ModelInterface, ArrayAccess, \Js
     protected static $openAPIFormats = [
         'id' => 'uuid',
         'mailbox_id' => 'uuid',
-        'created_at' => 'date-time'
+        'created_at' => 'date-time',
+        'replaced_old' => null
     ];
 
     /**
@@ -84,7 +86,8 @@ class CreateEncryptionKey201Response implements ModelInterface, ArrayAccess, \Js
     protected static array $openAPINullables = [
         'id' => false,
         'mailbox_id' => false,
-        'created_at' => false
+        'created_at' => false,
+        'replaced_old' => false
     ];
 
     /**
@@ -175,7 +178,8 @@ class CreateEncryptionKey201Response implements ModelInterface, ArrayAccess, \Js
     protected static $attributeMap = [
         'id' => 'id',
         'mailbox_id' => 'mailbox_id',
-        'created_at' => 'created_at'
+        'created_at' => 'created_at',
+        'replaced_old' => 'replaced_old'
     ];
 
     /**
@@ -186,7 +190,8 @@ class CreateEncryptionKey201Response implements ModelInterface, ArrayAccess, \Js
     protected static $setters = [
         'id' => 'setId',
         'mailbox_id' => 'setMailboxId',
-        'created_at' => 'setCreatedAt'
+        'created_at' => 'setCreatedAt',
+        'replaced_old' => 'setReplacedOld'
     ];
 
     /**
@@ -197,7 +202,8 @@ class CreateEncryptionKey201Response implements ModelInterface, ArrayAccess, \Js
     protected static $getters = [
         'id' => 'getId',
         'mailbox_id' => 'getMailboxId',
-        'created_at' => 'getCreatedAt'
+        'created_at' => 'getCreatedAt',
+        'replaced_old' => 'getReplacedOld'
     ];
 
     /**
@@ -260,6 +266,7 @@ class CreateEncryptionKey201Response implements ModelInterface, ArrayAccess, \Js
         $this->setIfExists('id', $data ?? [], null);
         $this->setIfExists('mailbox_id', $data ?? [], null);
         $this->setIfExists('created_at', $data ?? [], null);
+        $this->setIfExists('replaced_old', $data ?? [], null);
     }
 
     /**
@@ -381,6 +388,33 @@ class CreateEncryptionKey201Response implements ModelInterface, ArrayAccess, \Js
             throw new \InvalidArgumentException('non-nullable created_at cannot be null');
         }
         $this->container['created_at'] = $created_at;
+
+        return $this;
+    }
+
+    /**
+     * Gets replaced_old
+     *
+     * @return bool|null
+     */
+    public function getReplacedOld()
+    {
+        return $this->container['replaced_old'];
+    }
+
+    /**
+     * Sets replaced_old
+     *
+     * @param bool|null $replaced_old replaced_old
+     *
+     * @return self
+     */
+    public function setReplacedOld($replaced_old)
+    {
+        if (is_null($replaced_old)) {
+            throw new \InvalidArgumentException('non-nullable replaced_old cannot be null');
+        }
+        $this->container['replaced_old'] = $replaced_old;
 
         return $this;
     }

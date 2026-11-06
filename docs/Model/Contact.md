@@ -18,5 +18,7 @@ Name | Type | Description | Notes
 **status** | **string** |  |
 **created_at** | **\DateTime** |  |
 **updated_at** | **\DateTime** |  |
+**external_system** | **string** | The system that owns this contact&#39;s external id. Absent on contacts made by hand. | [optional]
+**external_id** | **string** | The contact&#39;s id in &#x60;external_system&#x60;. Absent on contacts made by hand. | [optional]
 
 [[Back to Model list]](../../README.md#models) [[Back to API list]](../../README.md#endpoints) [[Back to README]](../../README.md)

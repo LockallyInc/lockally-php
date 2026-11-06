@@ -701,15 +701,16 @@ class SendApi
      * @param  \DateTime|null $from Window start (default 7 days ago). (optional)
      * @param  \DateTime|null $to Window end (default now). (optional)
      * @param  string|null $domain Filter by sender domain. (optional)
+     * @param  string|null $tag Group the window by the sender&#39;s own tags: one tag, or a comma-separated set meaning ANY. Case-insensitive. This is the dimension that tells a transactional stream from a notification one. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getMessageStats'] to see the possible values for this operation
      *
      * @throws \Lockally\SDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return \Lockally\SDK\Model\MessageStats|\Lockally\SDK\Model\Problem|\Lockally\SDK\Model\Problem
      */
-    public function getMessageStats($from = null, $to = null, $domain = null, string $contentType = self::contentTypes['getMessageStats'][0])
+    public function getMessageStats($from = null, $to = null, $domain = null, $tag = null, string $contentType = self::contentTypes['getMessageStats'][0])
     {
-        list($response) = $this->getMessageStatsWithHttpInfo($from, $to, $domain, $contentType);
+        list($response) = $this->getMessageStatsWithHttpInfo($from, $to, $domain, $tag, $contentType);
         return $response;
     }
 
@@ -721,15 +722,16 @@ class SendApi
      * @param  \DateTime|null $from Window start (default 7 days ago). (optional)
      * @param  \DateTime|null $to Window end (default now). (optional)
      * @param  string|null $domain Filter by sender domain. (optional)
+     * @param  string|null $tag Group the window by the sender&#39;s own tags: one tag, or a comma-separated set meaning ANY. Case-insensitive. This is the dimension that tells a transactional stream from a notification one. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getMessageStats'] to see the possible values for this operation
      *
      * @throws \Lockally\SDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of \Lockally\SDK\Model\MessageStats|\Lockally\SDK\Model\Problem|\Lockally\SDK\Model\Problem, HTTP status code, HTTP response headers (array of strings)
      */
-    public function getMessageStatsWithHttpInfo($from = null, $to = null, $domain = null, string $contentType = self::contentTypes['getMessageStats'][0])
+    public function getMessageStatsWithHttpInfo($from = null, $to = null, $domain = null, $tag = null, string $contentType = self::contentTypes['getMessageStats'][0])
     {
-        $request = $this->getMessageStatsRequest($from, $to, $domain, $contentType);
+        $request = $this->getMessageStatsRequest($from, $to, $domain, $tag, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -836,14 +838,15 @@ class SendApi
      * @param  \DateTime|null $from Window start (default 7 days ago). (optional)
      * @param  \DateTime|null $to Window end (default now). (optional)
      * @param  string|null $domain Filter by sender domain. (optional)
+     * @param  string|null $tag Group the window by the sender&#39;s own tags: one tag, or a comma-separated set meaning ANY. Case-insensitive. This is the dimension that tells a transactional stream from a notification one. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getMessageStats'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function getMessageStatsAsync($from = null, $to = null, $domain = null, string $contentType = self::contentTypes['getMessageStats'][0])
+    public function getMessageStatsAsync($from = null, $to = null, $domain = null, $tag = null, string $contentType = self::contentTypes['getMessageStats'][0])
     {
-        return $this->getMessageStatsAsyncWithHttpInfo($from, $to, $domain, $contentType)
+        return $this->getMessageStatsAsyncWithHttpInfo($from, $to, $domain, $tag, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -859,15 +862,16 @@ class SendApi
      * @param  \DateTime|null $from Window start (default 7 days ago). (optional)
      * @param  \DateTime|null $to Window end (default now). (optional)
      * @param  string|null $domain Filter by sender domain. (optional)
+     * @param  string|null $tag Group the window by the sender&#39;s own tags: one tag, or a comma-separated set meaning ANY. Case-insensitive. This is the dimension that tells a transactional stream from a notification one. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getMessageStats'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function getMessageStatsAsyncWithHttpInfo($from = null, $to = null, $domain = null, string $contentType = self::contentTypes['getMessageStats'][0])
+    public function getMessageStatsAsyncWithHttpInfo($from = null, $to = null, $domain = null, $tag = null, string $contentType = self::contentTypes['getMessageStats'][0])
     {
         $returnType = '\Lockally\SDK\Model\MessageStats';
-        $request = $this->getMessageStatsRequest($from, $to, $domain, $contentType);
+        $request = $this->getMessageStatsRequest($from, $to, $domain, $tag, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -911,13 +915,15 @@ class SendApi
      * @param  \DateTime|null $from Window start (default 7 days ago). (optional)
      * @param  \DateTime|null $to Window end (default now). (optional)
      * @param  string|null $domain Filter by sender domain. (optional)
+     * @param  string|null $tag Group the window by the sender&#39;s own tags: one tag, or a comma-separated set meaning ANY. Case-insensitive. This is the dimension that tells a transactional stream from a notification one. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getMessageStats'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function getMessageStatsRequest($from = null, $to = null, $domain = null, string $contentType = self::contentTypes['getMessageStats'][0])
+    public function getMessageStatsRequest($from = null, $to = null, $domain = null, $tag = null, string $contentType = self::contentTypes['getMessageStats'][0])
     {
+
 
 
 
@@ -952,6 +958,15 @@ class SendApi
         $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
             $domain,
             'domain', // param base name
+            'string', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $tag,
+            'tag', // param base name
             'string', // openApiType
             'form', // style
             true, // explode
@@ -1025,19 +1040,22 @@ class SendApi
      *
      * @param  string|null $status status (optional)
      * @param  string|null $sender Exact match against the &#x60;from&#x60; mailbox. (optional)
+     * @param  string|null $tag Filter to messages carrying any of these tags. One tag, or a comma-separated set meaning ANY. Case-insensitive: the value is normalised the same way tags are on write. (optional)
      * @param  string|null $q Free-text search across subject + sender. (optional)
      * @param  \DateTime|null $since Only messages queued at or after this RFC 3339 instant. (optional)
      * @param  string|null $cursor queued_at of the prior page boundary. Pass back the &#x60;next_cursor&#x60; returned by the previous call. (optional)
      * @param  int|null $limit limit (optional, default to 50)
+     * @param  string|null $sort Field to order by. Only indexed columns are offered: an unindexed sort on this table is a full scan of the account&#39;s send history. status and sender are filters instead. (optional, default to 'queued_at')
+     * @param  string|null $order Defaults to desc for the default field and asc for any other. The order is always made total by a tie-break on id, so paging cannot repeat or skip a row that shares a timestamp. cursor encodes queued_at, so combining it with another sort is a 400 rather than a wrong page. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listMessages'] to see the possible values for this operation
      *
      * @throws \Lockally\SDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return \Lockally\SDK\Model\ListMessages200Response|\Lockally\SDK\Model\Problem|\Lockally\SDK\Model\Problem
      */
-    public function listMessages($status = null, $sender = null, $q = null, $since = null, $cursor = null, $limit = 50, string $contentType = self::contentTypes['listMessages'][0])
+    public function listMessages($status = null, $sender = null, $tag = null, $q = null, $since = null, $cursor = null, $limit = 50, $sort = 'queued_at', $order = null, string $contentType = self::contentTypes['listMessages'][0])
     {
-        list($response) = $this->listMessagesWithHttpInfo($status, $sender, $q, $since, $cursor, $limit, $contentType);
+        list($response) = $this->listMessagesWithHttpInfo($status, $sender, $tag, $q, $since, $cursor, $limit, $sort, $order, $contentType);
         return $response;
     }
 
@@ -1048,19 +1066,22 @@ class SendApi
      *
      * @param  string|null $status (optional)
      * @param  string|null $sender Exact match against the &#x60;from&#x60; mailbox. (optional)
+     * @param  string|null $tag Filter to messages carrying any of these tags. One tag, or a comma-separated set meaning ANY. Case-insensitive: the value is normalised the same way tags are on write. (optional)
      * @param  string|null $q Free-text search across subject + sender. (optional)
      * @param  \DateTime|null $since Only messages queued at or after this RFC 3339 instant. (optional)
      * @param  string|null $cursor queued_at of the prior page boundary. Pass back the &#x60;next_cursor&#x60; returned by the previous call. (optional)
      * @param  int|null $limit (optional, default to 50)
+     * @param  string|null $sort Field to order by. Only indexed columns are offered: an unindexed sort on this table is a full scan of the account&#39;s send history. status and sender are filters instead. (optional, default to 'queued_at')
+     * @param  string|null $order Defaults to desc for the default field and asc for any other. The order is always made total by a tie-break on id, so paging cannot repeat or skip a row that shares a timestamp. cursor encodes queued_at, so combining it with another sort is a 400 rather than a wrong page. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listMessages'] to see the possible values for this operation
      *
      * @throws \Lockally\SDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of \Lockally\SDK\Model\ListMessages200Response|\Lockally\SDK\Model\Problem|\Lockally\SDK\Model\Problem, HTTP status code, HTTP response headers (array of strings)
      */
-    public function listMessagesWithHttpInfo($status = null, $sender = null, $q = null, $since = null, $cursor = null, $limit = 50, string $contentType = self::contentTypes['listMessages'][0])
+    public function listMessagesWithHttpInfo($status = null, $sender = null, $tag = null, $q = null, $since = null, $cursor = null, $limit = 50, $sort = 'queued_at', $order = null, string $contentType = self::contentTypes['listMessages'][0])
     {
-        $request = $this->listMessagesRequest($status, $sender, $q, $since, $cursor, $limit, $contentType);
+        $request = $this->listMessagesRequest($status, $sender, $tag, $q, $since, $cursor, $limit, $sort, $order, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -1166,18 +1187,21 @@ class SendApi
      *
      * @param  string|null $status (optional)
      * @param  string|null $sender Exact match against the &#x60;from&#x60; mailbox. (optional)
+     * @param  string|null $tag Filter to messages carrying any of these tags. One tag, or a comma-separated set meaning ANY. Case-insensitive: the value is normalised the same way tags are on write. (optional)
      * @param  string|null $q Free-text search across subject + sender. (optional)
      * @param  \DateTime|null $since Only messages queued at or after this RFC 3339 instant. (optional)
      * @param  string|null $cursor queued_at of the prior page boundary. Pass back the &#x60;next_cursor&#x60; returned by the previous call. (optional)
      * @param  int|null $limit (optional, default to 50)
+     * @param  string|null $sort Field to order by. Only indexed columns are offered: an unindexed sort on this table is a full scan of the account&#39;s send history. status and sender are filters instead. (optional, default to 'queued_at')
+     * @param  string|null $order Defaults to desc for the default field and asc for any other. The order is always made total by a tie-break on id, so paging cannot repeat or skip a row that shares a timestamp. cursor encodes queued_at, so combining it with another sort is a 400 rather than a wrong page. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listMessages'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function listMessagesAsync($status = null, $sender = null, $q = null, $since = null, $cursor = null, $limit = 50, string $contentType = self::contentTypes['listMessages'][0])
+    public function listMessagesAsync($status = null, $sender = null, $tag = null, $q = null, $since = null, $cursor = null, $limit = 50, $sort = 'queued_at', $order = null, string $contentType = self::contentTypes['listMessages'][0])
     {
-        return $this->listMessagesAsyncWithHttpInfo($status, $sender, $q, $since, $cursor, $limit, $contentType)
+        return $this->listMessagesAsyncWithHttpInfo($status, $sender, $tag, $q, $since, $cursor, $limit, $sort, $order, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -1192,19 +1216,22 @@ class SendApi
      *
      * @param  string|null $status (optional)
      * @param  string|null $sender Exact match against the &#x60;from&#x60; mailbox. (optional)
+     * @param  string|null $tag Filter to messages carrying any of these tags. One tag, or a comma-separated set meaning ANY. Case-insensitive: the value is normalised the same way tags are on write. (optional)
      * @param  string|null $q Free-text search across subject + sender. (optional)
      * @param  \DateTime|null $since Only messages queued at or after this RFC 3339 instant. (optional)
      * @param  string|null $cursor queued_at of the prior page boundary. Pass back the &#x60;next_cursor&#x60; returned by the previous call. (optional)
      * @param  int|null $limit (optional, default to 50)
+     * @param  string|null $sort Field to order by. Only indexed columns are offered: an unindexed sort on this table is a full scan of the account&#39;s send history. status and sender are filters instead. (optional, default to 'queued_at')
+     * @param  string|null $order Defaults to desc for the default field and asc for any other. The order is always made total by a tie-break on id, so paging cannot repeat or skip a row that shares a timestamp. cursor encodes queued_at, so combining it with another sort is a 400 rather than a wrong page. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listMessages'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function listMessagesAsyncWithHttpInfo($status = null, $sender = null, $q = null, $since = null, $cursor = null, $limit = 50, string $contentType = self::contentTypes['listMessages'][0])
+    public function listMessagesAsyncWithHttpInfo($status = null, $sender = null, $tag = null, $q = null, $since = null, $cursor = null, $limit = 50, $sort = 'queued_at', $order = null, string $contentType = self::contentTypes['listMessages'][0])
     {
         $returnType = '\Lockally\SDK\Model\ListMessages200Response';
-        $request = $this->listMessagesRequest($status, $sender, $q, $since, $cursor, $limit, $contentType);
+        $request = $this->listMessagesRequest($status, $sender, $tag, $q, $since, $cursor, $limit, $sort, $order, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -1247,17 +1274,21 @@ class SendApi
      *
      * @param  string|null $status (optional)
      * @param  string|null $sender Exact match against the &#x60;from&#x60; mailbox. (optional)
+     * @param  string|null $tag Filter to messages carrying any of these tags. One tag, or a comma-separated set meaning ANY. Case-insensitive: the value is normalised the same way tags are on write. (optional)
      * @param  string|null $q Free-text search across subject + sender. (optional)
      * @param  \DateTime|null $since Only messages queued at or after this RFC 3339 instant. (optional)
      * @param  string|null $cursor queued_at of the prior page boundary. Pass back the &#x60;next_cursor&#x60; returned by the previous call. (optional)
      * @param  int|null $limit (optional, default to 50)
+     * @param  string|null $sort Field to order by. Only indexed columns are offered: an unindexed sort on this table is a full scan of the account&#39;s send history. status and sender are filters instead. (optional, default to 'queued_at')
+     * @param  string|null $order Defaults to desc for the default field and asc for any other. The order is always made total by a tie-break on id, so paging cannot repeat or skip a row that shares a timestamp. cursor encodes queued_at, so combining it with another sort is a 400 rather than a wrong page. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listMessages'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function listMessagesRequest($status = null, $sender = null, $q = null, $since = null, $cursor = null, $limit = 50, string $contentType = self::contentTypes['listMessages'][0])
+    public function listMessagesRequest($status = null, $sender = null, $tag = null, $q = null, $since = null, $cursor = null, $limit = 50, $sort = 'queued_at', $order = null, string $contentType = self::contentTypes['listMessages'][0])
     {
+
 
 
 
@@ -1268,6 +1299,8 @@ class SendApi
             throw new \InvalidArgumentException('invalid value for "$limit" when calling SendApi.listMessages, must be smaller than or equal to 200.');
         }
         
+
+
 
         $resourcePath = '/v1/messages';
         $formParams = [];
@@ -1289,6 +1322,15 @@ class SendApi
         $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
             $sender,
             'sender', // param base name
+            'string', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $tag,
+            'tag', // param base name
             'string', // openApiType
             'form', // style
             true, // explode
@@ -1326,6 +1368,24 @@ class SendApi
             $limit,
             'limit', // param base name
             'integer', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $sort,
+            'sort', // param base name
+            'string', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $order,
+            'order', // param base name
+            'string', // openApiType
             'form', // style
             true, // explode
             false // required

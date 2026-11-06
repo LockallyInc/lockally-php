@@ -189,7 +189,7 @@ try {
 ## `listTemplates()`
 
 ```php
-listTemplates(): \Lockally\SDK\Model\ListTemplates200Response
+listTemplates($sort, $order): \Lockally\SDK\Model\ListTemplates200Response
 ```
 
 List templates
@@ -211,9 +211,11 @@ $apiInstance = new Lockally\SDK\Api\TemplatesApi(
     new GuzzleHttp\Client(),
     $config
 );
+$sort = 'name'; // string | Field to order by. This list holds tens of rows per account, so every column is offered and none needs an index.
+$order = 'order_example'; // string | Defaults to asc for the default field and asc for any other. Always tie-broken on id, so the order is total.
 
 try {
-    $result = $apiInstance->listTemplates();
+    $result = $apiInstance->listTemplates($sort, $order);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling TemplatesApi->listTemplates: ', $e->getMessage(), PHP_EOL;
@@ -222,7 +224,10 @@ try {
 
 ### Parameters
 
-This endpoint does not need any parameter.
+| Name | Type | Description  | Notes |
+| ------------- | ------------- | ------------- | ------------- |
+| **sort** | **string**| Field to order by. This list holds tens of rows per account, so every column is offered and none needs an index. | [optional] [default to &#39;name&#39;] |
+| **order** | **string**| Defaults to asc for the default field and asc for any other. Always tie-broken on id, so the order is total. | [optional] |
 
 ### Return type
 

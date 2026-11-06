@@ -66,6 +66,9 @@ class CreateApiKey201Response implements ModelInterface, ArrayAccess, \JsonSeria
         'last_used_at' => '\DateTime',
         'revoked_at' => '\DateTime',
         'created_at' => '\DateTime',
+        'test' => 'bool',
+        'expires_at' => '\DateTime',
+        'rotated_to' => 'string',
         'secret' => 'string'
     ];
 
@@ -85,6 +88,9 @@ class CreateApiKey201Response implements ModelInterface, ArrayAccess, \JsonSeria
         'last_used_at' => 'date-time',
         'revoked_at' => 'date-time',
         'created_at' => 'date-time',
+        'test' => null,
+        'expires_at' => 'date-time',
+        'rotated_to' => 'uuid',
         'secret' => null
     ];
 
@@ -102,6 +108,9 @@ class CreateApiKey201Response implements ModelInterface, ArrayAccess, \JsonSeria
         'last_used_at' => false,
         'revoked_at' => false,
         'created_at' => false,
+        'test' => false,
+        'expires_at' => false,
+        'rotated_to' => false,
         'secret' => false
     ];
 
@@ -199,6 +208,9 @@ class CreateApiKey201Response implements ModelInterface, ArrayAccess, \JsonSeria
         'last_used_at' => 'last_used_at',
         'revoked_at' => 'revoked_at',
         'created_at' => 'created_at',
+        'test' => 'test',
+        'expires_at' => 'expires_at',
+        'rotated_to' => 'rotated_to',
         'secret' => 'secret'
     ];
 
@@ -216,6 +228,9 @@ class CreateApiKey201Response implements ModelInterface, ArrayAccess, \JsonSeria
         'last_used_at' => 'setLastUsedAt',
         'revoked_at' => 'setRevokedAt',
         'created_at' => 'setCreatedAt',
+        'test' => 'setTest',
+        'expires_at' => 'setExpiresAt',
+        'rotated_to' => 'setRotatedTo',
         'secret' => 'setSecret'
     ];
 
@@ -233,6 +248,9 @@ class CreateApiKey201Response implements ModelInterface, ArrayAccess, \JsonSeria
         'last_used_at' => 'getLastUsedAt',
         'revoked_at' => 'getRevokedAt',
         'created_at' => 'getCreatedAt',
+        'test' => 'getTest',
+        'expires_at' => 'getExpiresAt',
+        'rotated_to' => 'getRotatedTo',
         'secret' => 'getSecret'
     ];
 
@@ -301,6 +319,9 @@ class CreateApiKey201Response implements ModelInterface, ArrayAccess, \JsonSeria
         $this->setIfExists('last_used_at', $data ?? [], null);
         $this->setIfExists('revoked_at', $data ?? [], null);
         $this->setIfExists('created_at', $data ?? [], null);
+        $this->setIfExists('test', $data ?? [], null);
+        $this->setIfExists('expires_at', $data ?? [], null);
+        $this->setIfExists('rotated_to', $data ?? [], null);
         $this->setIfExists('secret', $data ?? [], null);
     }
 
@@ -579,6 +600,87 @@ class CreateApiKey201Response implements ModelInterface, ArrayAccess, \JsonSeria
             throw new \InvalidArgumentException('non-nullable created_at cannot be null');
         }
         $this->container['created_at'] = $created_at;
+
+        return $this;
+    }
+
+    /**
+     * Gets test
+     *
+     * @return bool|null
+     */
+    public function getTest()
+    {
+        return $this->container['test'];
+    }
+
+    /**
+     * Sets test
+     *
+     * @param bool|null $test True for an lk_test_* key: the whole request path runs but a send never reaches the mail server and nothing counts against the account.
+     *
+     * @return self
+     */
+    public function setTest($test)
+    {
+        if (is_null($test)) {
+            throw new \InvalidArgumentException('non-nullable test cannot be null');
+        }
+        $this->container['test'] = $test;
+
+        return $this;
+    }
+
+    /**
+     * Gets expires_at
+     *
+     * @return \DateTime|null
+     */
+    public function getExpiresAt()
+    {
+        return $this->container['expires_at'];
+    }
+
+    /**
+     * Sets expires_at
+     *
+     * @param \DateTime|null $expires_at When the key stops authenticating. Null means it does not expire, which is how every key behaved before expiry existed. Enforced at authentication, so the key fails the first request after this moment rather than whenever a sweep runs.
+     *
+     * @return self
+     */
+    public function setExpiresAt($expires_at)
+    {
+        if (is_null($expires_at)) {
+            throw new \InvalidArgumentException('non-nullable expires_at cannot be null');
+        }
+        $this->container['expires_at'] = $expires_at;
+
+        return $this;
+    }
+
+    /**
+     * Gets rotated_to
+     *
+     * @return string|null
+     */
+    public function getRotatedTo()
+    {
+        return $this->container['rotated_to'];
+    }
+
+    /**
+     * Sets rotated_to
+     *
+     * @param string|null $rotated_to The successor issued by `POST /v1/api-keys/{id}/rotate`. Set on the PREDECESSOR, so you can see which key replaced this one while both still work through the overlap window.
+     *
+     * @return self
+     */
+    public function setRotatedTo($rotated_to)
+    {
+        if (is_null($rotated_to)) {
+            throw new \InvalidArgumentException('non-nullable rotated_to cannot be null');
+        }
+        $this->container['rotated_to'] = $rotated_to;
 
         return $this;
     }

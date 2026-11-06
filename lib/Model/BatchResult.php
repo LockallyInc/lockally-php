@@ -62,7 +62,8 @@ class BatchResult implements ModelInterface, ArrayAccess, \JsonSerializable
         'id' => 'string',
         'message_id' => 'string',
         'status' => 'string',
-        'error' => 'string'
+        'error' => 'string',
+        'warning' => 'string'
     ];
 
     /**
@@ -77,7 +78,8 @@ class BatchResult implements ModelInterface, ArrayAccess, \JsonSerializable
         'id' => 'uuid',
         'message_id' => null,
         'status' => null,
-        'error' => null
+        'error' => null,
+        'warning' => null
     ];
 
     /**
@@ -90,7 +92,8 @@ class BatchResult implements ModelInterface, ArrayAccess, \JsonSerializable
         'id' => false,
         'message_id' => false,
         'status' => false,
-        'error' => false
+        'error' => false,
+        'warning' => false
     ];
 
     /**
@@ -183,7 +186,8 @@ class BatchResult implements ModelInterface, ArrayAccess, \JsonSerializable
         'id' => 'id',
         'message_id' => 'message_id',
         'status' => 'status',
-        'error' => 'error'
+        'error' => 'error',
+        'warning' => 'warning'
     ];
 
     /**
@@ -196,7 +200,8 @@ class BatchResult implements ModelInterface, ArrayAccess, \JsonSerializable
         'id' => 'setId',
         'message_id' => 'setMessageId',
         'status' => 'setStatus',
-        'error' => 'setError'
+        'error' => 'setError',
+        'warning' => 'setWarning'
     ];
 
     /**
@@ -209,7 +214,8 @@ class BatchResult implements ModelInterface, ArrayAccess, \JsonSerializable
         'id' => 'getId',
         'message_id' => 'getMessageId',
         'status' => 'getStatus',
-        'error' => 'getError'
+        'error' => 'getError',
+        'warning' => 'getWarning'
     ];
 
     /**
@@ -293,6 +299,7 @@ class BatchResult implements ModelInterface, ArrayAccess, \JsonSerializable
         $this->setIfExists('message_id', $data ?? [], null);
         $this->setIfExists('status', $data ?? [], null);
         $this->setIfExists('error', $data ?? [], null);
+        $this->setIfExists('warning', $data ?? [], null);
     }
 
     /**
@@ -487,6 +494,33 @@ class BatchResult implements ModelInterface, ArrayAccess, \JsonSerializable
             throw new \InvalidArgumentException('non-nullable error cannot be null');
         }
         $this->container['error'] = $error;
+
+        return $this;
+    }
+
+    /**
+     * Gets warning
+     *
+     * @return string|null
+     */
+    public function getWarning()
+    {
+        return $this->container['warning'];
+    }
+
+    /**
+     * Sets warning
+     *
+     * @param string|null $warning Advisory, and NOT a failure. Today the only one is a template variable the template referenced and the request never supplied, which rendered as the empty string.
+     *
+     * @return self
+     */
+    public function setWarning($warning)
+    {
+        if (is_null($warning)) {
+            throw new \InvalidArgumentException('non-nullable warning cannot be null');
+        }
+        $this->container['warning'] = $warning;
 
         return $this;
     }

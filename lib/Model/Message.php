@@ -68,7 +68,9 @@ class Message implements ModelInterface, ArrayAccess, \JsonSerializable
         'queued_at' => '\DateTime',
         'updated_at' => '\DateTime',
         'bounce_reason' => 'string',
-        'size_bytes' => 'int'
+        'size_bytes' => 'int',
+        'metadata' => 'array<string,string>',
+        'tags' => 'string[]'
     ];
 
     /**
@@ -89,7 +91,9 @@ class Message implements ModelInterface, ArrayAccess, \JsonSerializable
         'queued_at' => 'date-time',
         'updated_at' => 'date-time',
         'bounce_reason' => null,
-        'size_bytes' => null
+        'size_bytes' => null,
+        'metadata' => null,
+        'tags' => null
     ];
 
     /**
@@ -108,7 +112,9 @@ class Message implements ModelInterface, ArrayAccess, \JsonSerializable
         'queued_at' => false,
         'updated_at' => false,
         'bounce_reason' => false,
-        'size_bytes' => false
+        'size_bytes' => false,
+        'metadata' => false,
+        'tags' => false
     ];
 
     /**
@@ -207,7 +213,9 @@ class Message implements ModelInterface, ArrayAccess, \JsonSerializable
         'queued_at' => 'queued_at',
         'updated_at' => 'updated_at',
         'bounce_reason' => 'bounce_reason',
-        'size_bytes' => 'size_bytes'
+        'size_bytes' => 'size_bytes',
+        'metadata' => 'metadata',
+        'tags' => 'tags'
     ];
 
     /**
@@ -226,7 +234,9 @@ class Message implements ModelInterface, ArrayAccess, \JsonSerializable
         'queued_at' => 'setQueuedAt',
         'updated_at' => 'setUpdatedAt',
         'bounce_reason' => 'setBounceReason',
-        'size_bytes' => 'setSizeBytes'
+        'size_bytes' => 'setSizeBytes',
+        'metadata' => 'setMetadata',
+        'tags' => 'setTags'
     ];
 
     /**
@@ -245,7 +255,9 @@ class Message implements ModelInterface, ArrayAccess, \JsonSerializable
         'queued_at' => 'getQueuedAt',
         'updated_at' => 'getUpdatedAt',
         'bounce_reason' => 'getBounceReason',
-        'size_bytes' => 'getSizeBytes'
+        'size_bytes' => 'getSizeBytes',
+        'metadata' => 'getMetadata',
+        'tags' => 'getTags'
     ];
 
     /**
@@ -339,6 +351,8 @@ class Message implements ModelInterface, ArrayAccess, \JsonSerializable
         $this->setIfExists('updated_at', $data ?? [], null);
         $this->setIfExists('bounce_reason', $data ?? [], null);
         $this->setIfExists('size_bytes', $data ?? [], null);
+        $this->setIfExists('metadata', $data ?? [], null);
+        $this->setIfExists('tags', $data ?? [], null);
     }
 
     /**
@@ -719,6 +733,60 @@ class Message implements ModelInterface, ArrayAccess, \JsonSerializable
             throw new \InvalidArgumentException('non-nullable size_bytes cannot be null');
         }
         $this->container['size_bytes'] = $size_bytes;
+
+        return $this;
+    }
+
+    /**
+     * Gets metadata
+     *
+     * @return array<string,string>|null
+     */
+    public function getMetadata()
+    {
+        return $this->container['metadata'];
+    }
+
+    /**
+     * Sets metadata
+     *
+     * @param array<string,string>|null $metadata The sender's own key/value from the send request. Always present; `{}` when none was set.
+     *
+     * @return self
+     */
+    public function setMetadata($metadata)
+    {
+        if (is_null($metadata)) {
+            throw new \InvalidArgumentException('non-nullable metadata cannot be null');
+        }
+        $this->container['metadata'] = $metadata;
+
+        return $this;
+    }
+
+    /**
+     * Gets tags
+     *
+     * @return string[]|null
+     */
+    public function getTags()
+    {
+        return $this->container['tags'];
+    }
+
+    /**
+     * Sets tags
+     *
+     * @param string[]|null $tags Grouping labels, lowercased and deduplicated. Always present; `[]` when none were set.
+     *
+     * @return self
+     */
+    public function setTags($tags)
+    {
+        if (is_null($tags)) {
+            throw new \InvalidArgumentException('non-nullable tags cannot be null');
+        }
+        $this->container['tags'] = $tags;
 
         return $this;
     }

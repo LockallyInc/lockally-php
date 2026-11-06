@@ -85,12 +85,36 @@ class TenantApiTest extends TestCase
     }
 
     /**
+     * Test case for getTrackingPolicy
+     *
+     * Get the engagement tracking policy.
+     *
+     */
+    public function testGetTrackingPolicy()
+    {
+        // TODO: implement
+        self::markTestIncomplete('Not implemented');
+    }
+
+    /**
      * Test case for getUsage
      *
      * Usage snapshot.
      *
      */
     public function testGetUsage()
+    {
+        // TODO: implement
+        self::markTestIncomplete('Not implemented');
+    }
+
+    /**
+     * Test case for updateTrackingPolicy
+     *
+     * Update the engagement tracking policy.
+     *
+     */
+    public function testUpdateTrackingPolicy()
     {
         // TODO: implement
         self::markTestIncomplete('Not implemented');

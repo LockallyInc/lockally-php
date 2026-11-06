@@ -106,4 +106,13 @@ class CreateEncryptionKey201ResponseTest extends TestCase
         // TODO: implement
         self::markTestIncomplete('Not implemented');
     }
+
+    /**
+     * Test attribute "replaced_old"
+     */
+    public function testPropertyReplacedOld()
+    {
+        // TODO: implement
+        self::markTestIncomplete('Not implemented');
+    }
 }

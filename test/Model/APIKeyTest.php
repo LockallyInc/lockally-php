@@ -151,4 +151,31 @@ class APIKeyTest extends TestCase
         // TODO: implement
         self::markTestIncomplete('Not implemented');
     }
+
+    /**
+     * Test attribute "test"
+     */
+    public function testPropertyTest()
+    {
+        // TODO: implement
+        self::markTestIncomplete('Not implemented');
+    }
+
+    /**
+     * Test attribute "expires_at"
+     */
+    public function testPropertyExpiresAt()
+    {
+        // TODO: implement
+        self::markTestIncomplete('Not implemented');
+    }
+
+    /**
+     * Test attribute "rotated_to"
+     */
+    public function testPropertyRotatedTo()
+    {
+        // TODO: implement
+        self::markTestIncomplete('Not implemented');
+    }
 }

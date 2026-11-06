@@ -71,7 +71,9 @@ class Contact implements ModelInterface, ArrayAccess, \JsonSerializable
         'role' => 'string',
         'status' => 'string',
         'created_at' => '\DateTime',
-        'updated_at' => '\DateTime'
+        'updated_at' => '\DateTime',
+        'external_system' => 'string',
+        'external_id' => 'string'
     ];
 
     /**
@@ -95,7 +97,9 @@ class Contact implements ModelInterface, ArrayAccess, \JsonSerializable
         'role' => null,
         'status' => null,
         'created_at' => 'date-time',
-        'updated_at' => 'date-time'
+        'updated_at' => 'date-time',
+        'external_system' => null,
+        'external_id' => null
     ];
 
     /**
@@ -117,7 +121,9 @@ class Contact implements ModelInterface, ArrayAccess, \JsonSerializable
         'role' => false,
         'status' => false,
         'created_at' => false,
-        'updated_at' => false
+        'updated_at' => false,
+        'external_system' => false,
+        'external_id' => false
     ];
 
     /**
@@ -219,7 +225,9 @@ class Contact implements ModelInterface, ArrayAccess, \JsonSerializable
         'role' => 'role',
         'status' => 'status',
         'created_at' => 'created_at',
-        'updated_at' => 'updated_at'
+        'updated_at' => 'updated_at',
+        'external_system' => 'external_system',
+        'external_id' => 'external_id'
     ];
 
     /**
@@ -241,7 +249,9 @@ class Contact implements ModelInterface, ArrayAccess, \JsonSerializable
         'role' => 'setRole',
         'status' => 'setStatus',
         'created_at' => 'setCreatedAt',
-        'updated_at' => 'setUpdatedAt'
+        'updated_at' => 'setUpdatedAt',
+        'external_system' => 'setExternalSystem',
+        'external_id' => 'setExternalId'
     ];
 
     /**
@@ -263,7 +273,9 @@ class Contact implements ModelInterface, ArrayAccess, \JsonSerializable
         'role' => 'getRole',
         'status' => 'getStatus',
         'created_at' => 'getCreatedAt',
-        'updated_at' => 'getUpdatedAt'
+        'updated_at' => 'getUpdatedAt',
+        'external_system' => 'getExternalSystem',
+        'external_id' => 'getExternalId'
     ];
 
     /**
@@ -352,6 +364,8 @@ class Contact implements ModelInterface, ArrayAccess, \JsonSerializable
         $this->setIfExists('status', $data ?? [], null);
         $this->setIfExists('created_at', $data ?? [], null);
         $this->setIfExists('updated_at', $data ?? [], null);
+        $this->setIfExists('external_system', $data ?? [], null);
+        $this->setIfExists('external_id', $data ?? [], null);
     }
 
     /**
@@ -813,6 +827,60 @@ class Contact implements ModelInterface, ArrayAccess, \JsonSerializable
             throw new \InvalidArgumentException('non-nullable updated_at cannot be null');
         }
         $this->container['updated_at'] = $updated_at;
+
+        return $this;
+    }
+
+    /**
+     * Gets external_system
+     *
+     * @return string|null
+     */
+    public function getExternalSystem()
+    {
+        return $this->container['external_system'];
+    }
+
+    /**
+     * Sets external_system
+     *
+     * @param string|null $external_system The system that owns this contact's external id. Absent on contacts made by hand.
+     *
+     * @return self
+     */
+    public function setExternalSystem($external_system)
+    {
+        if (is_null($external_system)) {
+            throw new \InvalidArgumentException('non-nullable external_system cannot be null');
+        }
+        $this->container['external_system'] = $external_system;
+
+        return $this;
+    }
+
+    /**
+     * Gets external_id
+     *
+     * @return string|null
+     */
+    public function getExternalId()
+    {
+        return $this->container['external_id'];
+    }
+
+    /**
+     * Sets external_id
+     *
+     * @param string|null $external_id The contact's id in `external_system`. Absent on contacts made by hand.
+     *
+     * @return self
+     */
+    public function setExternalId($external_id)
+    {
+        if (is_null($external_id)) {
+            throw new \InvalidArgumentException('non-nullable external_id cannot be null');
+        }
+        $this->container['external_id'] = $external_id;
 
         return $this;
     }

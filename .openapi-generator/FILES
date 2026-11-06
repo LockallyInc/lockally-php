@@ -55,6 +55,10 @@ docs/Model/BatchLookupPublicKeys200Response.md
 docs/Model/BatchLookupPublicKeys200ResponseDataInner.md
 docs/Model/BatchResult.md
 docs/Model/BillingStatus.md
+docs/Model/BulkUpsertExternalContacts200Response.md
+docs/Model/BulkUpsertExternalContacts200ResponseResultsInner.md
+docs/Model/BulkUpsertExternalContactsRequest.md
+docs/Model/BulkUpsertExternalContactsRequestContactsInner.md
 docs/Model/Calendar.md
 docs/Model/CalendarEvent.md
 docs/Model/CalendarIntegration.md
@@ -104,6 +108,7 @@ docs/Model/Draft.md
 docs/Model/DraftList.md
 docs/Model/DraftResult.md
 docs/Model/ExportMailbox201Response.md
+docs/Model/ExternalContactInput.md
 docs/Model/GALSettings.md
 docs/Model/GetAddOnStatus200Response.md
 docs/Model/GetAuditSummary200Response.md
@@ -126,6 +131,8 @@ docs/Model/GetDomainsStatus200Response.md
 docs/Model/GetDomainsStatus200ResponseDomainsInner.md
 docs/Model/GetDomainsStatus200ResponseDomainsInnerChecksInner.md
 docs/Model/GetEncryptionKey200Response.md
+docs/Model/GetEncryptionStatus200Response.md
+docs/Model/GetEncryptionStatus200ResponseMailboxesInner.md
 docs/Model/GetIPAssignment200Response.md
 docs/Model/GetIntegrationsSummary200Response.md
 docs/Model/GetIntegrationsSummary200ResponseApiKeysInner.md
@@ -183,6 +190,8 @@ docs/Model/MessageStatsRates.md
 docs/Model/MessageStatsWindow.md
 docs/Model/Migration.md
 docs/Model/MigrationCredential.md
+docs/Model/MigrationDNSCheck.md
+docs/Model/MigrationDomainDNS.md
 docs/Model/MigrationEvent.md
 docs/Model/MigrationMailbox.md
 docs/Model/MigrationProgress.md
@@ -196,6 +205,7 @@ docs/Model/ReplaceDistributionListMembersRequest.md
 docs/Model/Resource.md
 docs/Model/ReturnPath.md
 docs/Model/ReturnPathCheck.md
+docs/Model/RotateApiKeyRequest.md
 docs/Model/RotateEncryptionKeyRequest.md
 docs/Model/SendEmail200Response.md
 docs/Model/SendEmail202Response.md
@@ -214,6 +224,8 @@ docs/Model/Suppression.md
 docs/Model/Template.md
 docs/Model/TemplateInput.md
 docs/Model/Tenant.md
+docs/Model/TenantHealthCheck.md
+docs/Model/TenantHealthReport.md
 docs/Model/Thread.md
 docs/Model/ThreadClassification.md
 docs/Model/ThreadList.md
@@ -221,8 +233,10 @@ docs/Model/ThreadMessage.md
 docs/Model/ThreadMessageBody.md
 docs/Model/ThreadMessageBodyBody.md
 docs/Model/ThreadSummary.md
+docs/Model/TrackingPolicy.md
 docs/Model/UnitBundle.md
 docs/Model/UpdateAdminRequest.md
+docs/Model/UpdateApiKeyRequest.md
 docs/Model/UpdateCalendarEventRequest.md
 docs/Model/UpdateCalendarIntegrationRequest.md
 docs/Model/UpdateCalendarMemberRequest.md
@@ -236,6 +250,7 @@ docs/Model/UpdateMailboxRequest.md
 docs/Model/UpdateMigrationMailboxRequest.md
 docs/Model/UpdateMigrationRequest.md
 docs/Model/UpdateResourceRequest.md
+docs/Model/UpdateTrackingPolicyRequest.md
 docs/Model/UpdateUserRequest.md
 docs/Model/UpdateWebhookRequest.md
 docs/Model/User.md
@@ -302,6 +317,10 @@ lib/Model/BatchLookupPublicKeys200Response.php
 lib/Model/BatchLookupPublicKeys200ResponseDataInner.php
 lib/Model/BatchResult.php
 lib/Model/BillingStatus.php
+lib/Model/BulkUpsertExternalContacts200Response.php
+lib/Model/BulkUpsertExternalContacts200ResponseResultsInner.php
+lib/Model/BulkUpsertExternalContactsRequest.php
+lib/Model/BulkUpsertExternalContactsRequestContactsInner.php
 lib/Model/Calendar.php
 lib/Model/CalendarEvent.php
 lib/Model/CalendarIntegration.php
@@ -351,6 +370,7 @@ lib/Model/Draft.php
 lib/Model/DraftList.php
 lib/Model/DraftResult.php
 lib/Model/ExportMailbox201Response.php
+lib/Model/ExternalContactInput.php
 lib/Model/GALSettings.php
 lib/Model/GetAddOnStatus200Response.php
 lib/Model/GetAuditSummary200Response.php
@@ -373,6 +393,8 @@ lib/Model/GetDomainsStatus200Response.php
 lib/Model/GetDomainsStatus200ResponseDomainsInner.php
 lib/Model/GetDomainsStatus200ResponseDomainsInnerChecksInner.php
 lib/Model/GetEncryptionKey200Response.php
+lib/Model/GetEncryptionStatus200Response.php
+lib/Model/GetEncryptionStatus200ResponseMailboxesInner.php
 lib/Model/GetIPAssignment200Response.php
 lib/Model/GetIntegrationsSummary200Response.php
 lib/Model/GetIntegrationsSummary200ResponseApiKeysInner.php
@@ -430,6 +452,8 @@ lib/Model/MessageStatsRates.php
 lib/Model/MessageStatsWindow.php
 lib/Model/Migration.php
 lib/Model/MigrationCredential.php
+lib/Model/MigrationDNSCheck.php
+lib/Model/MigrationDomainDNS.php
 lib/Model/MigrationEvent.php
 lib/Model/MigrationMailbox.php
 lib/Model/MigrationProgress.php
@@ -444,6 +468,7 @@ lib/Model/ReplaceDistributionListMembersRequest.php
 lib/Model/Resource.php
 lib/Model/ReturnPath.php
 lib/Model/ReturnPathCheck.php
+lib/Model/RotateApiKeyRequest.php
 lib/Model/RotateEncryptionKeyRequest.php
 lib/Model/SendEmail200Response.php
 lib/Model/SendEmail202Response.php
@@ -462,6 +487,8 @@ lib/Model/Suppression.php
 lib/Model/Template.php
 lib/Model/TemplateInput.php
 lib/Model/Tenant.php
+lib/Model/TenantHealthCheck.php
+lib/Model/TenantHealthReport.php
 lib/Model/Thread.php
 lib/Model/ThreadClassification.php
 lib/Model/ThreadList.php
@@ -469,8 +496,10 @@ lib/Model/ThreadMessage.php
 lib/Model/ThreadMessageBody.php
 lib/Model/ThreadMessageBodyBody.php
 lib/Model/ThreadSummary.php
+lib/Model/TrackingPolicy.php
 lib/Model/UnitBundle.php
 lib/Model/UpdateAdminRequest.php
+lib/Model/UpdateApiKeyRequest.php
 lib/Model/UpdateCalendarEventRequest.php
 lib/Model/UpdateCalendarIntegrationRequest.php
 lib/Model/UpdateCalendarMemberRequest.php
@@ -484,6 +513,7 @@ lib/Model/UpdateMailboxRequest.php
 lib/Model/UpdateMigrationMailboxRequest.php
 lib/Model/UpdateMigrationRequest.php
 lib/Model/UpdateResourceRequest.php
+lib/Model/UpdateTrackingPolicyRequest.php
 lib/Model/UpdateUserRequest.php
 lib/Model/UpdateWebhookRequest.php
 lib/Model/User.php
@@ -547,6 +577,10 @@ test/Model/BatchLookupPublicKeys200ResponseDataInnerTest.php
 test/Model/BatchLookupPublicKeys200ResponseTest.php
 test/Model/BatchResultTest.php
 test/Model/BillingStatusTest.php
+test/Model/BulkUpsertExternalContacts200ResponseResultsInnerTest.php
+test/Model/BulkUpsertExternalContacts200ResponseTest.php
+test/Model/BulkUpsertExternalContactsRequestContactsInnerTest.php
+test/Model/BulkUpsertExternalContactsRequestTest.php
 test/Model/CalendarEventTest.php
 test/Model/CalendarIntegrationTest.php
 test/Model/CalendarMemberTest.php
@@ -596,6 +630,7 @@ test/Model/DraftListTest.php
 test/Model/DraftResultTest.php
 test/Model/DraftTest.php
 test/Model/ExportMailbox201ResponseTest.php
+test/Model/ExternalContactInputTest.php
 test/Model/GALSettingsTest.php
 test/Model/GetAddOnStatus200ResponseTest.php
 test/Model/GetAuditSummary200ResponseTest.php
@@ -618,6 +653,8 @@ test/Model/GetDomainsStatus200ResponseDomainsInnerChecksInnerTest.php
 test/Model/GetDomainsStatus200ResponseDomainsInnerTest.php
 test/Model/GetDomainsStatus200ResponseTest.php
 test/Model/GetEncryptionKey200ResponseTest.php
+test/Model/GetEncryptionStatus200ResponseMailboxesInnerTest.php
+test/Model/GetEncryptionStatus200ResponseTest.php
 test/Model/GetIPAssignment200ResponseTest.php
 test/Model/GetIntegrationsSummary200ResponseApiKeysInnerTest.php
 test/Model/GetIntegrationsSummary200ResponseTest.php
@@ -674,6 +711,8 @@ test/Model/MessageStatsTest.php
 test/Model/MessageStatsWindowTest.php
 test/Model/MessageTest.php
 test/Model/MigrationCredentialTest.php
+test/Model/MigrationDNSCheckTest.php
+test/Model/MigrationDomainDNSTest.php
 test/Model/MigrationEventTest.php
 test/Model/MigrationMailboxTest.php
 test/Model/MigrationProgressMailboxesInnerTest.php
@@ -688,6 +727,7 @@ test/Model/ReplaceDistributionListMembersRequestTest.php
 test/Model/ResourceTest.php
 test/Model/ReturnPathCheckTest.php
 test/Model/ReturnPathTest.php
+test/Model/RotateApiKeyRequestTest.php
 test/Model/RotateEncryptionKeyRequestTest.php
 test/Model/SendEmail200ResponseTest.php
 test/Model/SendEmail202ResponseTest.php
@@ -705,6 +745,8 @@ test/Model/StartMigration202ResponseTest.php
 test/Model/SuppressionTest.php
 test/Model/TemplateInputTest.php
 test/Model/TemplateTest.php
+test/Model/TenantHealthCheckTest.php
+test/Model/TenantHealthReportTest.php
 test/Model/TenantTest.php
 test/Model/ThreadClassificationTest.php
 test/Model/ThreadListTest.php
@@ -713,8 +755,10 @@ test/Model/ThreadMessageBodyTest.php
 test/Model/ThreadMessageTest.php
 test/Model/ThreadSummaryTest.php
 test/Model/ThreadTest.php
+test/Model/TrackingPolicyTest.php
 test/Model/UnitBundleTest.php
 test/Model/UpdateAdminRequestTest.php
+test/Model/UpdateApiKeyRequestTest.php
 test/Model/UpdateCalendarEventRequestTest.php
 test/Model/UpdateCalendarIntegrationRequestTest.php
 test/Model/UpdateCalendarMemberRequestTest.php
@@ -728,6 +772,7 @@ test/Model/UpdateMailboxRequestTest.php
 test/Model/UpdateMigrationMailboxRequestTest.php
 test/Model/UpdateMigrationRequestTest.php
 test/Model/UpdateResourceRequestTest.php
+test/Model/UpdateTrackingPolicyRequestTest.php
 test/Model/UpdateUserRequestTest.php
 test/Model/UpdateWebhookRequestTest.php
 test/Model/UserEventTest.php

@@ -538,7 +538,7 @@ class MigrationsApi
      *
      * @throws \Lockally\SDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return object|\Lockally\SDK\Model\Problem|\Lockally\SDK\Model\Problem|\Lockally\SDK\Model\Problem|\Lockally\SDK\Model\Problem
+     * @return \Lockally\SDK\Model\MigrationDNSCheck|\Lockally\SDK\Model\Problem|\Lockally\SDK\Model\Problem|\Lockally\SDK\Model\Problem|\Lockally\SDK\Model\Problem|\Lockally\SDK\Model\Problem
      */
     public function checkMigrationDNS($id, string $contentType = self::contentTypes['checkMigrationDNS'][0])
     {
@@ -556,7 +556,7 @@ class MigrationsApi
      *
      * @throws \Lockally\SDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of object|\Lockally\SDK\Model\Problem|\Lockally\SDK\Model\Problem|\Lockally\SDK\Model\Problem|\Lockally\SDK\Model\Problem, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Lockally\SDK\Model\MigrationDNSCheck|\Lockally\SDK\Model\Problem|\Lockally\SDK\Model\Problem|\Lockally\SDK\Model\Problem|\Lockally\SDK\Model\Problem|\Lockally\SDK\Model\Problem, HTTP status code, HTTP response headers (array of strings)
      */
     public function checkMigrationDNSWithHttpInfo($id, string $contentType = self::contentTypes['checkMigrationDNS'][0])
     {
@@ -588,7 +588,13 @@ class MigrationsApi
             switch($statusCode) {
                 case 200:
                     return $this->handleResponseWithDataType(
-                        'object',
+                        '\Lockally\SDK\Model\MigrationDNSCheck',
+                        $request,
+                        $response,
+                    );
+                case 400:
+                    return $this->handleResponseWithDataType(
+                        '\Lockally\SDK\Model\Problem',
                         $request,
                         $response,
                     );
@@ -634,7 +640,7 @@ class MigrationsApi
             }
 
             return $this->handleResponseWithDataType(
-                'object',
+                '\Lockally\SDK\Model\MigrationDNSCheck',
                 $request,
                 $response,
             );
@@ -643,7 +649,15 @@ class MigrationsApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        'object',
+                        '\Lockally\SDK\Model\MigrationDNSCheck',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 400:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Lockally\SDK\Model\Problem',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -721,7 +735,7 @@ class MigrationsApi
      */
     public function checkMigrationDNSAsyncWithHttpInfo($id, string $contentType = self::contentTypes['checkMigrationDNS'][0])
     {
-        $returnType = 'object';
+        $returnType = '\Lockally\SDK\Model\MigrationDNSCheck';
         $request = $this->checkMigrationDNSRequest($id, $contentType);
 
         return $this->client

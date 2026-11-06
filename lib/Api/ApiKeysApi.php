@@ -84,6 +84,12 @@ class ApiKeysApi
         'revokeApiKey' => [
             'application/json',
         ],
+        'rotateApiKey' => [
+            'application/json',
+        ],
+        'updateApiKey' => [
+            'application/json',
+        ],
     ];
 
     /**
@@ -450,15 +456,17 @@ class ApiKeysApi
      *
      * List API keys
      *
+     * @param  string|null $sort Field to order by. This list holds tens of rows per account, so every column is offered and none needs an index. (optional, default to 'created_at')
+     * @param  string|null $order Defaults to desc for the default field and asc for any other. Always tie-broken on id, so the order is total. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listApiKeys'] to see the possible values for this operation
      *
      * @throws \Lockally\SDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return \Lockally\SDK\Model\ListApiKeys200Response|\Lockally\SDK\Model\Problem|\Lockally\SDK\Model\Problem
      */
-    public function listApiKeys(string $contentType = self::contentTypes['listApiKeys'][0])
+    public function listApiKeys($sort = 'created_at', $order = null, string $contentType = self::contentTypes['listApiKeys'][0])
     {
-        list($response) = $this->listApiKeysWithHttpInfo($contentType);
+        list($response) = $this->listApiKeysWithHttpInfo($sort, $order, $contentType);
         return $response;
     }
 
@@ -467,15 +475,17 @@ class ApiKeysApi
      *
      * List API keys
      *
+     * @param  string|null $sort Field to order by. This list holds tens of rows per account, so every column is offered and none needs an index. (optional, default to 'created_at')
+     * @param  string|null $order Defaults to desc for the default field and asc for any other. Always tie-broken on id, so the order is total. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listApiKeys'] to see the possible values for this operation
      *
      * @throws \Lockally\SDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of \Lockally\SDK\Model\ListApiKeys200Response|\Lockally\SDK\Model\Problem|\Lockally\SDK\Model\Problem, HTTP status code, HTTP response headers (array of strings)
      */
-    public function listApiKeysWithHttpInfo(string $contentType = self::contentTypes['listApiKeys'][0])
+    public function listApiKeysWithHttpInfo($sort = 'created_at', $order = null, string $contentType = self::contentTypes['listApiKeys'][0])
     {
-        $request = $this->listApiKeysRequest($contentType);
+        $request = $this->listApiKeysRequest($sort, $order, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -579,14 +589,16 @@ class ApiKeysApi
      *
      * List API keys
      *
+     * @param  string|null $sort Field to order by. This list holds tens of rows per account, so every column is offered and none needs an index. (optional, default to 'created_at')
+     * @param  string|null $order Defaults to desc for the default field and asc for any other. Always tie-broken on id, so the order is total. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listApiKeys'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function listApiKeysAsync(string $contentType = self::contentTypes['listApiKeys'][0])
+    public function listApiKeysAsync($sort = 'created_at', $order = null, string $contentType = self::contentTypes['listApiKeys'][0])
     {
-        return $this->listApiKeysAsyncWithHttpInfo($contentType)
+        return $this->listApiKeysAsyncWithHttpInfo($sort, $order, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -599,15 +611,17 @@ class ApiKeysApi
      *
      * List API keys
      *
+     * @param  string|null $sort Field to order by. This list holds tens of rows per account, so every column is offered and none needs an index. (optional, default to 'created_at')
+     * @param  string|null $order Defaults to desc for the default field and asc for any other. Always tie-broken on id, so the order is total. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listApiKeys'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function listApiKeysAsyncWithHttpInfo(string $contentType = self::contentTypes['listApiKeys'][0])
+    public function listApiKeysAsyncWithHttpInfo($sort = 'created_at', $order = null, string $contentType = self::contentTypes['listApiKeys'][0])
     {
         $returnType = '\Lockally\SDK\Model\ListApiKeys200Response';
-        $request = $this->listApiKeysRequest($contentType);
+        $request = $this->listApiKeysRequest($sort, $order, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -648,13 +662,17 @@ class ApiKeysApi
     /**
      * Create request for operation 'listApiKeys'
      *
+     * @param  string|null $sort Field to order by. This list holds tens of rows per account, so every column is offered and none needs an index. (optional, default to 'created_at')
+     * @param  string|null $order Defaults to desc for the default field and asc for any other. Always tie-broken on id, so the order is total. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listApiKeys'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function listApiKeysRequest(string $contentType = self::contentTypes['listApiKeys'][0])
+    public function listApiKeysRequest($sort = 'created_at', $order = null, string $contentType = self::contentTypes['listApiKeys'][0])
     {
+
+
 
 
         $resourcePath = '/v1/api-keys';
@@ -664,6 +682,24 @@ class ApiKeysApi
         $httpBody = '';
         $multipart = false;
 
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $sort,
+            'sort', // param base name
+            'string', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $order,
+            'order', // param base name
+            'string', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
 
 
 
@@ -973,6 +1009,722 @@ class ApiKeysApi
         $query = ObjectSerializer::buildQuery($queryParams);
         return new Request(
             'DELETE',
+            $operationHost . $resourcePath . ($query ? "?{$query}" : ''),
+            $headers,
+            $httpBody
+        );
+    }
+
+    /**
+     * Operation rotateApiKey
+     *
+     * Rotate an API key
+     *
+     * @param  string $id id (required)
+     * @param  \Lockally\SDK\Model\RotateApiKeyRequest|null $rotate_api_key_request rotate_api_key_request (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['rotateApiKey'] to see the possible values for this operation
+     *
+     * @throws \Lockally\SDK\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return \Lockally\SDK\Model\CreateApiKey201Response|\Lockally\SDK\Model\Problem|\Lockally\SDK\Model\Problem|\Lockally\SDK\Model\Problem|\Lockally\SDK\Model\Problem|\Lockally\SDK\Model\Problem
+     */
+    public function rotateApiKey($id, $rotate_api_key_request = null, string $contentType = self::contentTypes['rotateApiKey'][0])
+    {
+        list($response) = $this->rotateApiKeyWithHttpInfo($id, $rotate_api_key_request, $contentType);
+        return $response;
+    }
+
+    /**
+     * Operation rotateApiKeyWithHttpInfo
+     *
+     * Rotate an API key
+     *
+     * @param  string $id (required)
+     * @param  \Lockally\SDK\Model\RotateApiKeyRequest|null $rotate_api_key_request (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['rotateApiKey'] to see the possible values for this operation
+     *
+     * @throws \Lockally\SDK\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return array of \Lockally\SDK\Model\CreateApiKey201Response|\Lockally\SDK\Model\Problem|\Lockally\SDK\Model\Problem|\Lockally\SDK\Model\Problem|\Lockally\SDK\Model\Problem|\Lockally\SDK\Model\Problem, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function rotateApiKeyWithHttpInfo($id, $rotate_api_key_request = null, string $contentType = self::contentTypes['rotateApiKey'][0])
+    {
+        $request = $this->rotateApiKeyRequest($id, $rotate_api_key_request, $contentType);
+
+        try {
+            $options = $this->createHttpClientOption();
+            try {
+                $response = $this->client->send($request, $options);
+            } catch (RequestException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    (int) $e->getCode(),
+                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
+                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
+                );
+            } catch (ConnectException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    (int) $e->getCode(),
+                    null,
+                    null
+                );
+            }
+
+            $statusCode = $response->getStatusCode();
+
+
+            switch($statusCode) {
+                case 201:
+                    return $this->handleResponseWithDataType(
+                        '\Lockally\SDK\Model\CreateApiKey201Response',
+                        $request,
+                        $response,
+                    );
+                case 400:
+                    return $this->handleResponseWithDataType(
+                        '\Lockally\SDK\Model\Problem',
+                        $request,
+                        $response,
+                    );
+                case 401:
+                    return $this->handleResponseWithDataType(
+                        '\Lockally\SDK\Model\Problem',
+                        $request,
+                        $response,
+                    );
+                case 403:
+                    return $this->handleResponseWithDataType(
+                        '\Lockally\SDK\Model\Problem',
+                        $request,
+                        $response,
+                    );
+                case 404:
+                    return $this->handleResponseWithDataType(
+                        '\Lockally\SDK\Model\Problem',
+                        $request,
+                        $response,
+                    );
+                case 409:
+                    return $this->handleResponseWithDataType(
+                        '\Lockally\SDK\Model\Problem',
+                        $request,
+                        $response,
+                    );
+            }
+
+            
+
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    sprintf(
+                        '[%d] Error connecting to the API (%s)',
+                        $statusCode,
+                        (string) $request->getUri()
+                    ),
+                    $statusCode,
+                    $response->getHeaders(),
+                    (string) $response->getBody()
+                );
+            }
+
+            return $this->handleResponseWithDataType(
+                '\Lockally\SDK\Model\CreateApiKey201Response',
+                $request,
+                $response,
+            );
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+                case 201:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Lockally\SDK\Model\CreateApiKey201Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 400:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Lockally\SDK\Model\Problem',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 401:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Lockally\SDK\Model\Problem',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 403:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Lockally\SDK\Model\Problem',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 404:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Lockally\SDK\Model\Problem',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 409:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Lockally\SDK\Model\Problem',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+            }
+        
+
+            throw $e;
+        }
+    }
+
+    /**
+     * Operation rotateApiKeyAsync
+     *
+     * Rotate an API key
+     *
+     * @param  string $id (required)
+     * @param  \Lockally\SDK\Model\RotateApiKeyRequest|null $rotate_api_key_request (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['rotateApiKey'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function rotateApiKeyAsync($id, $rotate_api_key_request = null, string $contentType = self::contentTypes['rotateApiKey'][0])
+    {
+        return $this->rotateApiKeyAsyncWithHttpInfo($id, $rotate_api_key_request, $contentType)
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
+    }
+
+    /**
+     * Operation rotateApiKeyAsyncWithHttpInfo
+     *
+     * Rotate an API key
+     *
+     * @param  string $id (required)
+     * @param  \Lockally\SDK\Model\RotateApiKeyRequest|null $rotate_api_key_request (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['rotateApiKey'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function rotateApiKeyAsyncWithHttpInfo($id, $rotate_api_key_request = null, string $contentType = self::contentTypes['rotateApiKey'][0])
+    {
+        $returnType = '\Lockally\SDK\Model\CreateApiKey201Response';
+        $request = $this->rotateApiKeyRequest($id, $rotate_api_key_request, $contentType);
+
+        return $this->client
+            ->sendAsync($request, $this->createHttpClientOption())
+            ->then(
+                function ($response) use ($returnType) {
+                    if ($returnType === '\SplFileObject') {
+                        $content = $response->getBody(); //stream goes to serializer
+                    } else {
+                        $content = (string) $response->getBody();
+                        if ($returnType !== 'string') {
+                            $content = json_decode($content);
+                        }
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, $returnType, []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
+                },
+                function ($exception) {
+                    $response = $exception->getResponse();
+                    $statusCode = $response->getStatusCode();
+                    throw new ApiException(
+                        sprintf(
+                            '[%d] Error connecting to the API (%s)',
+                            $statusCode,
+                            $exception->getRequest()->getUri()
+                        ),
+                        $statusCode,
+                        $response->getHeaders(),
+                        (string) $response->getBody()
+                    );
+                }
+            );
+    }
+
+    /**
+     * Create request for operation 'rotateApiKey'
+     *
+     * @param  string $id (required)
+     * @param  \Lockally\SDK\Model\RotateApiKeyRequest|null $rotate_api_key_request (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['rotateApiKey'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    public function rotateApiKeyRequest($id, $rotate_api_key_request = null, string $contentType = self::contentTypes['rotateApiKey'][0])
+    {
+
+        // verify the required parameter 'id' is set
+        if ($id === null || (is_array($id) && count($id) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $id when calling rotateApiKey'
+            );
+        }
+
+
+
+        $resourcePath = '/v1/api-keys/{id}/rotate';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+
+
+        // path params
+        if ($id !== null) {
+            $resourcePath = str_replace(
+                '{id}',
+                ObjectSerializer::toPathValue($id),
+                $resourcePath
+            );
+        }
+
+
+        $headers = $this->headerSelector->selectHeaders(
+            ['application/json', 'application/problem+json', ],
+            $contentType,
+            $multipart
+        );
+
+        // for model (json/xml)
+        if (isset($rotate_api_key_request)) {
+            if (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the body
+                $httpBody = \GuzzleHttp\Utils::jsonEncode(ObjectSerializer::sanitizeForSerialization($rotate_api_key_request));
+            } else {
+                $httpBody = $rotate_api_key_request;
+            }
+        } elseif (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $formParamValueItems = is_array($formParamValue) ? $formParamValue : [$formParamValue];
+                    foreach ($formParamValueItems as $formParamValueItem) {
+                        $multipartContents[] = [
+                            'name' => $formParamName,
+                            'contents' => $formParamValueItem
+                        ];
+                    }
+                }
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
+
+            } elseif (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the form parameters
+                $httpBody = \GuzzleHttp\Utils::jsonEncode($formParams);
+            } else {
+                // for HTTP post (form)
+                $httpBody = ObjectSerializer::buildQuery($formParams);
+            }
+        }
+
+        // this endpoint requires Bearer (lk_live_<prefix>_<secret>) authentication (access token)
+        if (!empty($this->config->getAccessToken())) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        $operationHost = $this->config->getHost();
+        $query = ObjectSerializer::buildQuery($queryParams);
+        return new Request(
+            'POST',
+            $operationHost . $resourcePath . ($query ? "?{$query}" : ''),
+            $headers,
+            $httpBody
+        );
+    }
+
+    /**
+     * Operation updateApiKey
+     *
+     * Update an API key
+     *
+     * @param  string $id id (required)
+     * @param  \Lockally\SDK\Model\UpdateApiKeyRequest $update_api_key_request update_api_key_request (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateApiKey'] to see the possible values for this operation
+     *
+     * @throws \Lockally\SDK\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return \Lockally\SDK\Model\APIKey|\Lockally\SDK\Model\Problem|\Lockally\SDK\Model\Problem|\Lockally\SDK\Model\Problem|\Lockally\SDK\Model\Problem|\Lockally\SDK\Model\Problem
+     */
+    public function updateApiKey($id, $update_api_key_request, string $contentType = self::contentTypes['updateApiKey'][0])
+    {
+        list($response) = $this->updateApiKeyWithHttpInfo($id, $update_api_key_request, $contentType);
+        return $response;
+    }
+
+    /**
+     * Operation updateApiKeyWithHttpInfo
+     *
+     * Update an API key
+     *
+     * @param  string $id (required)
+     * @param  \Lockally\SDK\Model\UpdateApiKeyRequest $update_api_key_request (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateApiKey'] to see the possible values for this operation
+     *
+     * @throws \Lockally\SDK\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return array of \Lockally\SDK\Model\APIKey|\Lockally\SDK\Model\Problem|\Lockally\SDK\Model\Problem|\Lockally\SDK\Model\Problem|\Lockally\SDK\Model\Problem|\Lockally\SDK\Model\Problem, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function updateApiKeyWithHttpInfo($id, $update_api_key_request, string $contentType = self::contentTypes['updateApiKey'][0])
+    {
+        $request = $this->updateApiKeyRequest($id, $update_api_key_request, $contentType);
+
+        try {
+            $options = $this->createHttpClientOption();
+            try {
+                $response = $this->client->send($request, $options);
+            } catch (RequestException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    (int) $e->getCode(),
+                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
+                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
+                );
+            } catch (ConnectException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    (int) $e->getCode(),
+                    null,
+                    null
+                );
+            }
+
+            $statusCode = $response->getStatusCode();
+
+
+            switch($statusCode) {
+                case 200:
+                    return $this->handleResponseWithDataType(
+                        '\Lockally\SDK\Model\APIKey',
+                        $request,
+                        $response,
+                    );
+                case 400:
+                    return $this->handleResponseWithDataType(
+                        '\Lockally\SDK\Model\Problem',
+                        $request,
+                        $response,
+                    );
+                case 401:
+                    return $this->handleResponseWithDataType(
+                        '\Lockally\SDK\Model\Problem',
+                        $request,
+                        $response,
+                    );
+                case 403:
+                    return $this->handleResponseWithDataType(
+                        '\Lockally\SDK\Model\Problem',
+                        $request,
+                        $response,
+                    );
+                case 404:
+                    return $this->handleResponseWithDataType(
+                        '\Lockally\SDK\Model\Problem',
+                        $request,
+                        $response,
+                    );
+                case 409:
+                    return $this->handleResponseWithDataType(
+                        '\Lockally\SDK\Model\Problem',
+                        $request,
+                        $response,
+                    );
+            }
+
+            
+
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    sprintf(
+                        '[%d] Error connecting to the API (%s)',
+                        $statusCode,
+                        (string) $request->getUri()
+                    ),
+                    $statusCode,
+                    $response->getHeaders(),
+                    (string) $response->getBody()
+                );
+            }
+
+            return $this->handleResponseWithDataType(
+                '\Lockally\SDK\Model\APIKey',
+                $request,
+                $response,
+            );
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+                case 200:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Lockally\SDK\Model\APIKey',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 400:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Lockally\SDK\Model\Problem',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 401:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Lockally\SDK\Model\Problem',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 403:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Lockally\SDK\Model\Problem',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 404:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Lockally\SDK\Model\Problem',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 409:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Lockally\SDK\Model\Problem',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+            }
+        
+
+            throw $e;
+        }
+    }
+
+    /**
+     * Operation updateApiKeyAsync
+     *
+     * Update an API key
+     *
+     * @param  string $id (required)
+     * @param  \Lockally\SDK\Model\UpdateApiKeyRequest $update_api_key_request (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateApiKey'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function updateApiKeyAsync($id, $update_api_key_request, string $contentType = self::contentTypes['updateApiKey'][0])
+    {
+        return $this->updateApiKeyAsyncWithHttpInfo($id, $update_api_key_request, $contentType)
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
+    }
+
+    /**
+     * Operation updateApiKeyAsyncWithHttpInfo
+     *
+     * Update an API key
+     *
+     * @param  string $id (required)
+     * @param  \Lockally\SDK\Model\UpdateApiKeyRequest $update_api_key_request (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateApiKey'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function updateApiKeyAsyncWithHttpInfo($id, $update_api_key_request, string $contentType = self::contentTypes['updateApiKey'][0])
+    {
+        $returnType = '\Lockally\SDK\Model\APIKey';
+        $request = $this->updateApiKeyRequest($id, $update_api_key_request, $contentType);
+
+        return $this->client
+            ->sendAsync($request, $this->createHttpClientOption())
+            ->then(
+                function ($response) use ($returnType) {
+                    if ($returnType === '\SplFileObject') {
+                        $content = $response->getBody(); //stream goes to serializer
+                    } else {
+                        $content = (string) $response->getBody();
+                        if ($returnType !== 'string') {
+                            $content = json_decode($content);
+                        }
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, $returnType, []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
+                },
+                function ($exception) {
+                    $response = $exception->getResponse();
+                    $statusCode = $response->getStatusCode();
+                    throw new ApiException(
+                        sprintf(
+                            '[%d] Error connecting to the API (%s)',
+                            $statusCode,
+                            $exception->getRequest()->getUri()
+                        ),
+                        $statusCode,
+                        $response->getHeaders(),
+                        (string) $response->getBody()
+                    );
+                }
+            );
+    }
+
+    /**
+     * Create request for operation 'updateApiKey'
+     *
+     * @param  string $id (required)
+     * @param  \Lockally\SDK\Model\UpdateApiKeyRequest $update_api_key_request (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateApiKey'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    public function updateApiKeyRequest($id, $update_api_key_request, string $contentType = self::contentTypes['updateApiKey'][0])
+    {
+
+        // verify the required parameter 'id' is set
+        if ($id === null || (is_array($id) && count($id) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $id when calling updateApiKey'
+            );
+        }
+
+        // verify the required parameter 'update_api_key_request' is set
+        if ($update_api_key_request === null || (is_array($update_api_key_request) && count($update_api_key_request) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $update_api_key_request when calling updateApiKey'
+            );
+        }
+
+
+        $resourcePath = '/v1/api-keys/{id}';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+
+
+        // path params
+        if ($id !== null) {
+            $resourcePath = str_replace(
+                '{id}',
+                ObjectSerializer::toPathValue($id),
+                $resourcePath
+            );
+        }
+
+
+        $headers = $this->headerSelector->selectHeaders(
+            ['application/json', 'application/problem+json', ],
+            $contentType,
+            $multipart
+        );
+
+        // for model (json/xml)
+        if (isset($update_api_key_request)) {
+            if (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the body
+                $httpBody = \GuzzleHttp\Utils::jsonEncode(ObjectSerializer::sanitizeForSerialization($update_api_key_request));
+            } else {
+                $httpBody = $update_api_key_request;
+            }
+        } elseif (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $formParamValueItems = is_array($formParamValue) ? $formParamValue : [$formParamValue];
+                    foreach ($formParamValueItems as $formParamValueItem) {
+                        $multipartContents[] = [
+                            'name' => $formParamName,
+                            'contents' => $formParamValueItem
+                        ];
+                    }
+                }
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
+
+            } elseif (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the form parameters
+                $httpBody = \GuzzleHttp\Utils::jsonEncode($formParams);
+            } else {
+                // for HTTP post (form)
+                $httpBody = ObjectSerializer::buildQuery($formParams);
+            }
+        }
+
+        // this endpoint requires Bearer (lk_live_<prefix>_<secret>) authentication (access token)
+        if (!empty($this->config->getAccessToken())) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        $operationHost = $this->config->getHost();
+        $query = ObjectSerializer::buildQuery($queryParams);
+        return new Request(
+            'PATCH',
             $operationHost . $resourcePath . ($query ? "?{$query}" : ''),
             $headers,
             $httpBody

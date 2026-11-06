@@ -282,9 +282,6 @@ class CreateEncryptionRecoveryRequest implements ModelInterface, ArrayAccess, \J
     {
         $invalidProperties = [];
 
-        if ($this->container['mailbox_email'] === null) {
-            $invalidProperties[] = "'mailbox_email' can't be null";
-        }
         if ($this->container['recovery_blob'] === null) {
             $invalidProperties[] = "'recovery_blob' can't be null";
         }
@@ -306,7 +303,7 @@ class CreateEncryptionRecoveryRequest implements ModelInterface, ArrayAccess, \J
     /**
      * Gets mailbox_email
      *
-     * @return string
+     * @return string|null
      */
     public function getMailboxEmail()
     {
@@ -316,7 +313,7 @@ class CreateEncryptionRecoveryRequest implements ModelInterface, ArrayAccess, \J
     /**
      * Sets mailbox_email
      *
-     * @param string $mailbox_email mailbox_email
+     * @param string|null $mailbox_email mailbox_email
      *
      * @return self
      */

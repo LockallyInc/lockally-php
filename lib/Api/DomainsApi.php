@@ -1952,15 +1952,17 @@ class DomainsApi
      *
      * List domains
      *
+     * @param  string|null $sort Field to order by. This list holds tens of rows per account, so every column is offered and none needs an index. (optional, default to 'created_at')
+     * @param  string|null $order Defaults to desc for the default field and asc for any other. Always tie-broken on id, so the order is total. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listDomains'] to see the possible values for this operation
      *
      * @throws \Lockally\SDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return \Lockally\SDK\Model\ListDomains200Response|\Lockally\SDK\Model\Problem|\Lockally\SDK\Model\Problem
      */
-    public function listDomains(string $contentType = self::contentTypes['listDomains'][0])
+    public function listDomains($sort = 'created_at', $order = null, string $contentType = self::contentTypes['listDomains'][0])
     {
-        list($response) = $this->listDomainsWithHttpInfo($contentType);
+        list($response) = $this->listDomainsWithHttpInfo($sort, $order, $contentType);
         return $response;
     }
 
@@ -1969,15 +1971,17 @@ class DomainsApi
      *
      * List domains
      *
+     * @param  string|null $sort Field to order by. This list holds tens of rows per account, so every column is offered and none needs an index. (optional, default to 'created_at')
+     * @param  string|null $order Defaults to desc for the default field and asc for any other. Always tie-broken on id, so the order is total. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listDomains'] to see the possible values for this operation
      *
      * @throws \Lockally\SDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of \Lockally\SDK\Model\ListDomains200Response|\Lockally\SDK\Model\Problem|\Lockally\SDK\Model\Problem, HTTP status code, HTTP response headers (array of strings)
      */
-    public function listDomainsWithHttpInfo(string $contentType = self::contentTypes['listDomains'][0])
+    public function listDomainsWithHttpInfo($sort = 'created_at', $order = null, string $contentType = self::contentTypes['listDomains'][0])
     {
-        $request = $this->listDomainsRequest($contentType);
+        $request = $this->listDomainsRequest($sort, $order, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -2081,14 +2085,16 @@ class DomainsApi
      *
      * List domains
      *
+     * @param  string|null $sort Field to order by. This list holds tens of rows per account, so every column is offered and none needs an index. (optional, default to 'created_at')
+     * @param  string|null $order Defaults to desc for the default field and asc for any other. Always tie-broken on id, so the order is total. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listDomains'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function listDomainsAsync(string $contentType = self::contentTypes['listDomains'][0])
+    public function listDomainsAsync($sort = 'created_at', $order = null, string $contentType = self::contentTypes['listDomains'][0])
     {
-        return $this->listDomainsAsyncWithHttpInfo($contentType)
+        return $this->listDomainsAsyncWithHttpInfo($sort, $order, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -2101,15 +2107,17 @@ class DomainsApi
      *
      * List domains
      *
+     * @param  string|null $sort Field to order by. This list holds tens of rows per account, so every column is offered and none needs an index. (optional, default to 'created_at')
+     * @param  string|null $order Defaults to desc for the default field and asc for any other. Always tie-broken on id, so the order is total. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listDomains'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function listDomainsAsyncWithHttpInfo(string $contentType = self::contentTypes['listDomains'][0])
+    public function listDomainsAsyncWithHttpInfo($sort = 'created_at', $order = null, string $contentType = self::contentTypes['listDomains'][0])
     {
         $returnType = '\Lockally\SDK\Model\ListDomains200Response';
-        $request = $this->listDomainsRequest($contentType);
+        $request = $this->listDomainsRequest($sort, $order, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -2150,13 +2158,17 @@ class DomainsApi
     /**
      * Create request for operation 'listDomains'
      *
+     * @param  string|null $sort Field to order by. This list holds tens of rows per account, so every column is offered and none needs an index. (optional, default to 'created_at')
+     * @param  string|null $order Defaults to desc for the default field and asc for any other. Always tie-broken on id, so the order is total. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listDomains'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function listDomainsRequest(string $contentType = self::contentTypes['listDomains'][0])
+    public function listDomainsRequest($sort = 'created_at', $order = null, string $contentType = self::contentTypes['listDomains'][0])
     {
+
+
 
 
         $resourcePath = '/v1/domains';
@@ -2166,6 +2178,24 @@ class DomainsApi
         $httpBody = '';
         $multipart = false;
 
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $sort,
+            'sort', // param base name
+            'string', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $order,
+            'order', // param base name
+            'string', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
 
 
 

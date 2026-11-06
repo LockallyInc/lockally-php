@@ -468,7 +468,7 @@ class UsersApi
     /**
      * Operation deleteUser
      *
-     * Delete a user
+     * Deprovision a user
      *
      * @param  string $id id (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['deleteUser'] to see the possible values for this operation
@@ -485,7 +485,7 @@ class UsersApi
     /**
      * Operation deleteUserWithHttpInfo
      *
-     * Delete a user
+     * Deprovision a user
      *
      * @param  string $id (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['deleteUser'] to see the possible values for this operation
@@ -548,6 +548,14 @@ class UsersApi
                     );
                     $e->setResponseObject($data);
                     throw $e;
+                case 409:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Lockally\SDK\Model\Problem',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
             }
         
 
@@ -558,7 +566,7 @@ class UsersApi
     /**
      * Operation deleteUserAsync
      *
-     * Delete a user
+     * Deprovision a user
      *
      * @param  string $id (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['deleteUser'] to see the possible values for this operation
@@ -579,7 +587,7 @@ class UsersApi
     /**
      * Operation deleteUserAsyncWithHttpInfo
      *
-     * Delete a user
+     * Deprovision a user
      *
      * @param  string $id (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['deleteUser'] to see the possible values for this operation
@@ -1337,7 +1345,7 @@ class UsersApi
      *
      * @throws \Lockally\SDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \Lockally\SDK\Model\User|\Lockally\SDK\Model\Problem|\Lockally\SDK\Model\Problem|\Lockally\SDK\Model\Problem|\Lockally\SDK\Model\Problem
+     * @return \Lockally\SDK\Model\User|\Lockally\SDK\Model\Problem|\Lockally\SDK\Model\Problem|\Lockally\SDK\Model\Problem|\Lockally\SDK\Model\Problem|\Lockally\SDK\Model\Problem
      */
     public function updateUser($id, $update_user_request, string $contentType = self::contentTypes['updateUser'][0])
     {
@@ -1356,7 +1364,7 @@ class UsersApi
      *
      * @throws \Lockally\SDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \Lockally\SDK\Model\User|\Lockally\SDK\Model\Problem|\Lockally\SDK\Model\Problem|\Lockally\SDK\Model\Problem|\Lockally\SDK\Model\Problem, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Lockally\SDK\Model\User|\Lockally\SDK\Model\Problem|\Lockally\SDK\Model\Problem|\Lockally\SDK\Model\Problem|\Lockally\SDK\Model\Problem|\Lockally\SDK\Model\Problem, HTTP status code, HTTP response headers (array of strings)
      */
     public function updateUserWithHttpInfo($id, $update_user_request, string $contentType = self::contentTypes['updateUser'][0])
     {
@@ -1411,6 +1419,12 @@ class UsersApi
                         $response,
                     );
                 case 404:
+                    return $this->handleResponseWithDataType(
+                        '\Lockally\SDK\Model\Problem',
+                        $request,
+                        $response,
+                    );
+                case 409:
                     return $this->handleResponseWithDataType(
                         '\Lockally\SDK\Model\Problem',
                         $request,
@@ -1473,6 +1487,14 @@ class UsersApi
                     $e->setResponseObject($data);
                     throw $e;
                 case 404:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Lockally\SDK\Model\Problem',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 409:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
                         '\Lockally\SDK\Model\Problem',

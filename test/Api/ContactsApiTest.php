@@ -73,6 +73,18 @@ class ContactsApiTest extends TestCase
     }
 
     /**
+     * Test case for bulkUpsertExternalContacts
+     *
+     * Create or update up to 500 contacts by their ids in another system.
+     *
+     */
+    public function testBulkUpsertExternalContacts()
+    {
+        // TODO: implement
+        self::markTestIncomplete('Not implemented');
+    }
+
+    /**
      * Test case for createContact
      *
      * Create a contact.
@@ -91,6 +103,18 @@ class ContactsApiTest extends TestCase
      *
      */
     public function testDeleteContact()
+    {
+        // TODO: implement
+        self::markTestIncomplete('Not implemented');
+    }
+
+    /**
+     * Test case for deleteExternalContact
+     *
+     * Delete a contact by its id in another system.
+     *
+     */
+    public function testDeleteExternalContact()
     {
         // TODO: implement
         self::markTestIncomplete('Not implemented');
@@ -121,6 +145,18 @@ class ContactsApiTest extends TestCase
     }
 
     /**
+     * Test case for getExternalContact
+     *
+     * Get a contact by its id in another system.
+     *
+     */
+    public function testGetExternalContact()
+    {
+        // TODO: implement
+        self::markTestIncomplete('Not implemented');
+    }
+
+    /**
      * Test case for listContacts
      *
      * List contacts.
@@ -139,6 +175,18 @@ class ContactsApiTest extends TestCase
      *
      */
     public function testUpdateContact()
+    {
+        // TODO: implement
+        self::markTestIncomplete('Not implemented');
+    }
+
+    /**
+     * Test case for upsertExternalContact
+     *
+     * Create or update a contact by its id in another system.
+     *
+     */
+    public function testUpsertExternalContact()
     {
         // TODO: implement
         self::markTestIncomplete('Not implemented');

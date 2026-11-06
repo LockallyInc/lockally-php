@@ -121,9 +121,21 @@ class EncryptionApiTest extends TestCase
     }
 
     /**
+     * Test case for getEncryptionStatus
+     *
+     * End-to-end encryption status for the workspace.
+     *
+     */
+    public function testGetEncryptionStatus()
+    {
+        // TODO: implement
+        self::markTestIncomplete('Not implemented');
+    }
+
+    /**
      * Test case for rotateEncryptionKey
      *
-     * Rotate an encryption key.
+     * Re-seal an encryption key under a new password.
      *
      */
     public function testRotateEncryptionKey()
