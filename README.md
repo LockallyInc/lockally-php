@@ -9,11 +9,11 @@
 </p>
 <!-- /lockally-brand-header -->
 
-# Lockally
+# Lockally SDK for PHP
 
-The lockally control plane lets integrators and direct customers manage
-everything except actual mail data flow (which uses standard JMAP / IMAP /
-SMTP-submission against the data plane endpoints).
+Official Lockally SDK for PHP: send email and manage mailboxes, domains and webhooks through the Lockally API.
+
+[Website](https://lockally.com) | [API reference](https://developers.lockally.com) | [Source](https://github.com/LockallyInc/lockally-php)
 
 **Authentication.** All `/v1/_*` endpoints require a Bearer API key in the
 `Authorization` header. Keys are formatted `lk_live_<8-char-prefix>_<32-char-secret>`,
@@ -30,6 +30,7 @@ account moves to a plan without API access, and works again if it moves back.
 Insufficient scope returns `403` with the required scope name in `detail`.
 
 
+For more information, please visit [https://lockally.com](https://lockally.com).
 
 ## Installation & Usage
 
@@ -46,11 +47,11 @@ To install the bindings via [Composer](https://getcomposer.org/), add the follow
   "repositories": [
     {
       "type": "vcs",
-      "url": "https://github.com/GIT_USER_ID/GIT_REPO_ID.git"
+      "url": "https://github.com/LockallyInc/lockally-php.git"
     }
   ],
   "require": {
-    "GIT_USER_ID/GIT_REPO_ID": "*@dev"
+    "LockallyInc/lockally-php": "*@dev"
   }
 }
 ```
@@ -230,16 +231,12 @@ Class | Method | HTTP request | Description
 *MailboxesApi* | [**addSharedMember**](docs/Api/MailboxesApi.md#addsharedmember) | **POST** /v1/mailboxes/{email}/members | Add a shared mailbox member
 *MailboxesApi* | [**createMailbox**](docs/Api/MailboxesApi.md#createmailbox) | **POST** /v1/mailboxes | Create a mailbox
 *MailboxesApi* | [**deleteMailbox**](docs/Api/MailboxesApi.md#deletemailbox) | **DELETE** /v1/mailboxes/{email} | Soft-delete a mailbox
-*MailboxesApi* | [**deleteVacationResponder**](docs/Api/MailboxesApi.md#deletevacationresponder) | **DELETE** /v1/mailboxes/{email}/vacation | Remove the vacation responder
 *MailboxesApi* | [**downloadMailboxExport**](docs/Api/MailboxesApi.md#downloadmailboxexport) | **GET** /v1/mailboxes/{email}/export/download | Download a previously-issued mailbox export
 *MailboxesApi* | [**exportMailbox**](docs/Api/MailboxesApi.md#exportmailbox) | **POST** /v1/mailboxes/{email}/export | Request a mailbox export
 *MailboxesApi* | [**getMailbox**](docs/Api/MailboxesApi.md#getmailbox) | **GET** /v1/mailboxes/{email} | Get a mailbox
-*MailboxesApi* | [**getVacationResponder**](docs/Api/MailboxesApi.md#getvacationresponder) | **GET** /v1/mailboxes/{email}/vacation | Get the vacation responder
 *MailboxesApi* | [**listMailboxes**](docs/Api/MailboxesApi.md#listmailboxes) | **GET** /v1/mailboxes | List mailboxes
 *MailboxesApi* | [**listSharedMembers**](docs/Api/MailboxesApi.md#listsharedmembers) | **GET** /v1/mailboxes/{email}/members | List shared mailbox members
-*MailboxesApi* | [**listVacationResponders**](docs/Api/MailboxesApi.md#listvacationresponders) | **GET** /v1/vacation | List all vacation responders
 *MailboxesApi* | [**removeSharedMember**](docs/Api/MailboxesApi.md#removesharedmember) | **DELETE** /v1/mailboxes/{email}/members/{memberEmail} | Remove a shared mailbox member
-*MailboxesApi* | [**setVacationResponder**](docs/Api/MailboxesApi.md#setvacationresponder) | **PUT** /v1/mailboxes/{email}/vacation | Set the vacation responder
 *MailboxesApi* | [**updateMailbox**](docs/Api/MailboxesApi.md#updatemailbox) | **PATCH** /v1/mailboxes/{email} | Update a mailbox
 *MigrationsApi* | [**cancelMigration**](docs/Api/MigrationsApi.md#cancelmigration) | **POST** /v1/migrations/{id}/cancel | Cancel a running migration
 *MigrationsApi* | [**checkMigrationDNS**](docs/Api/MigrationsApi.md#checkmigrationdns) | **GET** /v1/migrations/{id}/dns-check | Check DNS readiness for cutover
@@ -440,7 +437,6 @@ Class | Method | HTTP request | Description
 - [ListSuppressions200Response](docs/Model/ListSuppressions200Response.md)
 - [ListTemplates200Response](docs/Model/ListTemplates200Response.md)
 - [ListUsers200Response](docs/Model/ListUsers200Response.md)
-- [ListVacationResponders200Response](docs/Model/ListVacationResponders200Response.md)
 - [ListWebhooks200Response](docs/Model/ListWebhooks200Response.md)
 - [Mailbox](docs/Model/Mailbox.md)
 - [MailboxGrant](docs/Model/MailboxGrant.md)
@@ -480,7 +476,6 @@ Class | Method | HTTP request | Description
 - [SendEmailRequest](docs/Model/SendEmailRequest.md)
 - [SendEmailRequestAttachmentsInner](docs/Model/SendEmailRequestAttachmentsInner.md)
 - [SendMessage](docs/Model/SendMessage.md)
-- [SetVacationResponderRequest](docs/Model/SetVacationResponderRequest.md)
 - [SharedMember](docs/Model/SharedMember.md)
 - [SignupRequest](docs/Model/SignupRequest.md)
 - [SimulatedInbound](docs/Model/SimulatedInbound.md)
@@ -521,8 +516,6 @@ Class | Method | HTTP request | Description
 - [UpdateWebhookRequest](docs/Model/UpdateWebhookRequest.md)
 - [User](docs/Model/User.md)
 - [UserEvent](docs/Model/UserEvent.md)
-- [VacationParams](docs/Model/VacationParams.md)
-- [VacationResponder](docs/Model/VacationResponder.md)
 - [Webhook](docs/Model/Webhook.md)
 - [Whoami](docs/Model/Whoami.md)
 - [WhoamiKey](docs/Model/WhoamiKey.md)
@@ -562,6 +555,6 @@ support@lockally.com
 This PHP package is automatically generated by the [OpenAPI Generator](https://openapi-generator.tech) project:
 
 - API version: `0.1.0`
-    - Package version: `0.4.0`
+    - Package version: `0.5.0`
     - Generator version: `7.23.0`
 - Build package: `org.openapitools.codegen.languages.PhpClientCodegen`

@@ -174,7 +174,6 @@ docs/Model/ListSharedMembers200Response.md
 docs/Model/ListSuppressions200Response.md
 docs/Model/ListTemplates200Response.md
 docs/Model/ListUsers200Response.md
-docs/Model/ListVacationResponders200Response.md
 docs/Model/ListWebhooks200Response.md
 docs/Model/Mailbox.md
 docs/Model/MailboxGrant.md
@@ -214,7 +213,6 @@ docs/Model/SendEmailBatchRequest.md
 docs/Model/SendEmailRequest.md
 docs/Model/SendEmailRequestAttachmentsInner.md
 docs/Model/SendMessage.md
-docs/Model/SetVacationResponderRequest.md
 docs/Model/SharedMember.md
 docs/Model/SignupRequest.md
 docs/Model/SimulatedInbound.md
@@ -255,8 +253,6 @@ docs/Model/UpdateUserRequest.md
 docs/Model/UpdateWebhookRequest.md
 docs/Model/User.md
 docs/Model/UserEvent.md
-docs/Model/VacationParams.md
-docs/Model/VacationResponder.md
 docs/Model/Webhook.md
 docs/Model/Whoami.md
 docs/Model/WhoamiKey.md
@@ -436,7 +432,6 @@ lib/Model/ListSharedMembers200Response.php
 lib/Model/ListSuppressions200Response.php
 lib/Model/ListTemplates200Response.php
 lib/Model/ListUsers200Response.php
-lib/Model/ListVacationResponders200Response.php
 lib/Model/ListWebhooks200Response.php
 lib/Model/Mailbox.php
 lib/Model/MailboxGrant.php
@@ -477,7 +472,6 @@ lib/Model/SendEmailBatchRequest.php
 lib/Model/SendEmailRequest.php
 lib/Model/SendEmailRequestAttachmentsInner.php
 lib/Model/SendMessage.php
-lib/Model/SetVacationResponderRequest.php
 lib/Model/SharedMember.php
 lib/Model/SignupRequest.php
 lib/Model/SimulatedInbound.php
@@ -518,8 +512,6 @@ lib/Model/UpdateUserRequest.php
 lib/Model/UpdateWebhookRequest.php
 lib/Model/User.php
 lib/Model/UserEvent.php
-lib/Model/VacationParams.php
-lib/Model/VacationResponder.php
 lib/Model/Webhook.php
 lib/Model/Whoami.php
 lib/Model/WhoamiKey.php
@@ -696,7 +688,6 @@ test/Model/ListSharedMembers200ResponseTest.php
 test/Model/ListSuppressions200ResponseTest.php
 test/Model/ListTemplates200ResponseTest.php
 test/Model/ListUsers200ResponseTest.php
-test/Model/ListVacationResponders200ResponseTest.php
 test/Model/ListWebhooks200ResponseTest.php
 test/Model/MailboxGrantListTest.php
 test/Model/MailboxGrantTest.php
@@ -736,7 +727,6 @@ test/Model/SendEmailBatchRequestTest.php
 test/Model/SendEmailRequestAttachmentsInnerTest.php
 test/Model/SendEmailRequestTest.php
 test/Model/SendMessageTest.php
-test/Model/SetVacationResponderRequestTest.php
 test/Model/SharedMemberTest.php
 test/Model/SignupRequestTest.php
 test/Model/SimulatedInboundTest.php
@@ -777,8 +767,6 @@ test/Model/UpdateUserRequestTest.php
 test/Model/UpdateWebhookRequestTest.php
 test/Model/UserEventTest.php
 test/Model/UserTest.php
-test/Model/VacationParamsTest.php
-test/Model/VacationResponderTest.php
 test/Model/WebhookTest.php
 test/Model/WhoamiKeyTest.php
 test/Model/WhoamiTenantTest.php

@@ -10,9 +10,9 @@
  */
 
 /**
- * lockally control plane
+ * Lockally API
  *
- * The lockally control plane lets integrators and direct customers manage everything except actual mail data flow (which uses standard JMAP / IMAP / SMTP-submission against the data plane endpoints).  **Authentication.** All `/v1/_*` endpoints require a Bearer API key in the `Authorization` header. Keys are formatted `lk_live_<8-char-prefix>_<32-char-secret>`, or `lk_test_<...>` for a test key. Create keys in the dashboard, or with `POST /v1/api-keys` using a key that holds `tenant:admin`.  The key's plan is checked on every request, so a key stops working if the account moves to a plan without API access, and works again if it moves back.  **Errors.** Failures return [RFC 9457](https://www.rfc-editor.org/rfc/rfc9457) `application/problem+json` documents.  **Scopes.** Each endpoint requires a specific scope on the presented key. Insufficient scope returns `403` with the required scope name in `detail`.
+ * Official Lockally SDK for PHP: send email and manage mailboxes, domains and webhooks through the Lockally API.  **Authentication.** All `/v1/_*` endpoints require a Bearer API key in the `Authorization` header. Keys are formatted `lk_live_<8-char-prefix>_<32-char-secret>`, or `lk_test_<...>` for a test key. Create keys in the dashboard, or with `POST /v1/api-keys` using a key that holds `tenant:admin`.  The key's plan is checked on every request, so a key stops working if the account moves to a plan without API access, and works again if it moves back.  **Errors.** Failures return [RFC 9457](https://www.rfc-editor.org/rfc/rfc9457) `application/problem+json` documents.  **Scopes.** Each endpoint requires a specific scope on the presented key. Insufficient scope returns `403` with the required scope name in `detail`.
  *
  * The version of the OpenAPI document: 0.1.0
  * Contact: support@lockally.com
@@ -109,18 +109,6 @@ class MailboxesApiTest extends TestCase
     }
 
     /**
-     * Test case for deleteVacationResponder
-     *
-     * Remove the vacation responder.
-     *
-     */
-    public function testDeleteVacationResponder()
-    {
-        // TODO: implement
-        self::markTestIncomplete('Not implemented');
-    }
-
-    /**
      * Test case for downloadMailboxExport
      *
      * Download a previously-issued mailbox export.
@@ -157,18 +145,6 @@ class MailboxesApiTest extends TestCase
     }
 
     /**
-     * Test case for getVacationResponder
-     *
-     * Get the vacation responder.
-     *
-     */
-    public function testGetVacationResponder()
-    {
-        // TODO: implement
-        self::markTestIncomplete('Not implemented');
-    }
-
-    /**
      * Test case for listMailboxes
      *
      * List mailboxes.
@@ -193,36 +169,12 @@ class MailboxesApiTest extends TestCase
     }
 
     /**
-     * Test case for listVacationResponders
-     *
-     * List all vacation responders.
-     *
-     */
-    public function testListVacationResponders()
-    {
-        // TODO: implement
-        self::markTestIncomplete('Not implemented');
-    }
-
-    /**
      * Test case for removeSharedMember
      *
      * Remove a shared mailbox member.
      *
      */
     public function testRemoveSharedMember()
-    {
-        // TODO: implement
-        self::markTestIncomplete('Not implemented');
-    }
-
-    /**
-     * Test case for setVacationResponder
-     *
-     * Set the vacation responder.
-     *
-     */
-    public function testSetVacationResponder()
     {
         // TODO: implement
         self::markTestIncomplete('Not implemented');

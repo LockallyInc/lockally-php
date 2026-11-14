@@ -1,19 +1,26 @@
 # Release workflow for the PHP SDK (Packagist package `lockally/sdk`).
 #
-# TEMPLATE — inert in this monorepo. Copy to `.github/workflows/publish.yml` in
+# TEMPLATE, inert in this monorepo. Copy to `.github/workflows/publish.yml` in
 # the SDK's own repo (generated `sdk/php/` tree, pushed to
 # github.com/lockallyinc/lockally-php). Tag-driven: push `vX.Y.Z`.
 #
-# Packagist publishes by reading the git tag, so there is no artifact upload —
-# this workflow just pings Packagist to pull the new tag immediately (otherwise
-# it syncs on its own schedule / GitHub webhook).
+# Packagist publishes by reading the git tag, so there is no artifact upload and
+# nothing to authenticate for the release itself. Two things can tell Packagist
+# to read the tag now rather than on its own schedule: the GitHub integration
+# (set up once on the Packagist account, covers every repo) or an API ping with
+# PACKAGIST_USERNAME/PACKAGIST_TOKEN. There is no OIDC trusted publishing here
+# and nothing to convert. The integration is the better of the two, because it
+# needs no secret in the repo at all.
 #
 # One-time setup:
 #   - Submit the repo once at https://packagist.org/packages/submit
-#   - Add repo secrets PACKAGIST_USERNAME (your Packagist user) and
+#   - Either enable the Packagist GitHub integration (Packagist → Profile →
+#     Settings → GitHub integration), or add repo secrets PACKAGIST_USERNAME and
 #     PACKAGIST_TOKEN (Packagist → Profile → Show API Token). Claude never
-#     handles these. (Or just enable the Packagist GitHub webhook and delete
-#     this workflow — the tag then syncs automatically.)
+#     handles these.
+#
+# Whichever path is used, the release is not green until the version is actually
+# on Packagist: the ping is optional, the verification below is not.
 name: Update Packagist
 
 on:
@@ -27,20 +34,46 @@ jobs:
   notify:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
       - name: Ping Packagist
         env:
           PACKAGIST_USERNAME: ${{ secrets.PACKAGIST_USERNAME }}
           PACKAGIST_TOKEN: ${{ secrets.PACKAGIST_TOKEN }}
           # Update THIS repo's package (works for lockally-php, lockally-laravel,
-          # lockally-symfony, …) — not a hardcoded repo.
+          # lockally-symfony, …), not a hardcoded repo.
           REPO_URL: ${{ github.server_url }}/${{ github.repository }}
         run: |
           if [ -z "$PACKAGIST_USERNAME" ] || [ -z "$PACKAGIST_TOKEN" ]; then
-            echo "PACKAGIST_USERNAME/PACKAGIST_TOKEN not set — skipping API ping."
-            echo "Packagist will pick up the tag via its scheduled crawl or the GitHub webhook,"
-            echo "or trigger it manually with the 'Update' button on the package page."
+            echo "::warning::PACKAGIST_USERNAME/PACKAGIST_TOKEN are not set, so this run did not ping Packagist. It now relies entirely on the GitHub integration or the scheduled crawl; the verification step decides whether that worked."
             exit 0
           fi
           curl -sf -XPOST -H 'content-type:application/json' \
             "https://packagist.org/api/update-package?username=${PACKAGIST_USERNAME}&apiToken=${PACKAGIST_TOKEN}" \
             -d "{\"repository\":{\"url\":\"${REPO_URL}\"}}"
+
+      # The gate. A green ping proves Packagist accepted the request, not that it
+      # read the tag, and with no credentials there is no ping at all. So ask
+      # Packagist what it has. This is the step that stops a release looking
+      # published when the registry was never told.
+      - name: Verify the version reached Packagist
+        run: |
+          set -uo pipefail
+          package=$(python3 -c "import json;print(json.load(open('composer.json'))['name'])")
+          version="${GITHUB_REF_NAME#v}"
+          echo "waiting for ${package} ${version} on Packagist"
+
+          on_packagist() {
+            # Cache-bust: the p2 metadata is served through a CDN.
+            curl -fsS "https://repo.packagist.org/p2/${package}.json?t=$(date +%s)" \
+              | python3 -c "import json,sys; want='${version}'; vs=json.load(sys.stdin)['packages'].get('${package}', []); sys.exit(0 if any(v.get('version','').lstrip('v') == want for v in vs) else 1)"
+          }
+
+          for i in $(seq 1 20); do
+            if on_packagist; then
+              echo "published: ${package} ${version} is on Packagist"
+              exit 0
+            fi
+            sleep 30
+          done
+          echo "::error::${package} ${version} did not appear on Packagist within 10 minutes. Either the GitHub integration is not enabled for this repo and no PACKAGIST_USERNAME/PACKAGIST_TOKEN is set, or the package was never submitted at https://packagist.org/packages/submit."
+          exit 1

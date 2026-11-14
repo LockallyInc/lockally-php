@@ -1,24 +1,28 @@
 {
     "name": "lockally/sdk",
-    "version": "0.4.0",
-    "description": "The lockally control plane lets integrators and direct customers manage everything except actual mail data flow (which uses standard JMAP / IMAP / SMTP-submission against the data plane endpoints).  **Authentication.** All `/v1/_*` endpoints require a Bearer API key in the `Authorization` header. Keys are formatted `lk_live_<8-char-prefix>_<32-char-secret>`, or `lk_test_<...>` for a test key. Create keys in the dashboard, or with `POST /v1/api-keys` using a key that holds `tenant:admin`.  The key's plan is checked on every request, so a key stops working if the account moves to a plan without API access, and works again if it moves back.  **Errors.** Failures return [RFC 9457](https://www.rfc-editor.org/rfc/rfc9457) `application/problem+json` documents.  **Scopes.** Each endpoint requires a specific scope on the presented key. Insufficient scope returns `403` with the required scope name in `detail`.",
+    "version": "0.5.0",
+    "description": "Official Lockally SDK for PHP: send email and manage mailboxes, domains and webhooks through the Lockally API.",
     "keywords": [
-        "openapitools",
-        "openapi-generator",
-        "openapi",
-        "php",
+        "lockally",
+        "email",
+        "email-api",
+        "transactional-email",
         "sdk",
-        "rest",
-        "api"
+        "php"
     ],
-    "homepage": "https://openapi-generator.tech",
-    "license": "unlicense",
+    "homepage": "https://lockally.com",
+    "license": "MIT",
     "authors": [
         {
-            "name": "OpenAPI",
-            "homepage": "https://openapi-generator.tech"
+            "name": "Lockally",
+            "homepage": "https://lockally.com"
         }
     ],
+    "support": {
+        "issues": "https://github.com/LockallyInc/lockally-php/issues",
+        "source": "https://github.com/LockallyInc/lockally-php",
+        "docs": "https://developers.lockally.com"
+    },
     "require": {
         "php": "^8.1",
         "ext-curl": "*",
@@ -32,9 +36,13 @@
         "friendsofphp/php-cs-fixer": "^3.5"
     },
     "autoload": {
-        "psr-4": { "Lockally\\SDK\\" : "lib/" }
+        "psr-4": {
+            "Lockally\\SDK\\": "lib/"
+        }
     },
     "autoload-dev": {
-        "psr-4": { "Lockally\\SDK\\Test\\" : "test/" }
+        "psr-4": {
+            "Lockally\\SDK\\Test\\": "test/"
+        }
     }
 }
