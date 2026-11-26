@@ -253,6 +253,7 @@ class CreateApiKeyRequest implements ModelInterface, ArrayAccess, \JsonSerializa
     public const SCOPES_MAILBOXES_WRITE = 'mailboxes:write';
     public const SCOPES_DIRECTORY_SYNC = 'directory:sync';
     public const SCOPES_INBOXES_READ = 'inboxes:read';
+    public const SCOPES_INBOXES_DRAFT = 'inboxes:draft';
     public const SCOPES_INBOXES_WRITE = 'inboxes:write';
     public const SCOPES_SEND_READ = 'send:read';
     public const SCOPES_SEND_WRITE = 'send:write';
@@ -281,6 +282,7 @@ class CreateApiKeyRequest implements ModelInterface, ArrayAccess, \JsonSerializa
             self::SCOPES_MAILBOXES_WRITE,
             self::SCOPES_DIRECTORY_SYNC,
             self::SCOPES_INBOXES_READ,
+            self::SCOPES_INBOXES_DRAFT,
             self::SCOPES_INBOXES_WRITE,
             self::SCOPES_SEND_READ,
             self::SCOPES_SEND_WRITE,

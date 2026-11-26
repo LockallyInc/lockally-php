@@ -59,6 +59,7 @@ class SendMessage implements ModelInterface, ArrayAccess, \JsonSerializable
      */
     protected static $openAPITypes = [
         'from' => 'string',
+        'from_name' => 'string',
         'to' => 'string[]',
         'cc' => 'string[]',
         'bcc' => 'string[]',
@@ -83,7 +84,8 @@ class SendMessage implements ModelInterface, ArrayAccess, \JsonSerializable
      * @psalm-var array<string, string|null>
      */
     protected static $openAPIFormats = [
-        'from' => 'email',
+        'from' => null,
+        'from_name' => null,
         'to' => 'email',
         'cc' => 'email',
         'bcc' => 'email',
@@ -107,6 +109,7 @@ class SendMessage implements ModelInterface, ArrayAccess, \JsonSerializable
      */
     protected static array $openAPINullables = [
         'from' => false,
+        'from_name' => false,
         'to' => false,
         'cc' => false,
         'bcc' => false,
@@ -210,6 +213,7 @@ class SendMessage implements ModelInterface, ArrayAccess, \JsonSerializable
      */
     protected static $attributeMap = [
         'from' => 'from',
+        'from_name' => 'from_name',
         'to' => 'to',
         'cc' => 'cc',
         'bcc' => 'bcc',
@@ -233,6 +237,7 @@ class SendMessage implements ModelInterface, ArrayAccess, \JsonSerializable
      */
     protected static $setters = [
         'from' => 'setFrom',
+        'from_name' => 'setFromName',
         'to' => 'setTo',
         'cc' => 'setCc',
         'bcc' => 'setBcc',
@@ -256,6 +261,7 @@ class SendMessage implements ModelInterface, ArrayAccess, \JsonSerializable
      */
     protected static $getters = [
         'from' => 'getFrom',
+        'from_name' => 'getFromName',
         'to' => 'getTo',
         'cc' => 'getCc',
         'bcc' => 'getBcc',
@@ -330,6 +336,7 @@ class SendMessage implements ModelInterface, ArrayAccess, \JsonSerializable
     public function __construct(?array $data = null)
     {
         $this->setIfExists('from', $data ?? [], null);
+        $this->setIfExists('from_name', $data ?? [], null);
         $this->setIfExists('to', $data ?? [], null);
         $this->setIfExists('cc', $data ?? [], null);
         $this->setIfExists('bcc', $data ?? [], null);
@@ -376,6 +383,10 @@ class SendMessage implements ModelInterface, ArrayAccess, \JsonSerializable
         if ($this->container['from'] === null) {
             $invalidProperties[] = "'from' can't be null";
         }
+        if (!is_null($this->container['from_name']) && (mb_strlen($this->container['from_name']) > 200)) {
+            $invalidProperties[] = "invalid value for 'from_name', the character length must be smaller than or equal to 200.";
+        }
+
         if ($this->container['to'] === null) {
             $invalidProperties[] = "'to' can't be null";
         }
@@ -411,7 +422,7 @@ class SendMessage implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets from
      *
-     * @param string $from from
+     * @param string $from Sender address, alone or as `Acme Orders <orders@acme.com>`.
      *
      * @return self
      */
@@ -421,6 +432,37 @@ class SendMessage implements ModelInterface, ArrayAccess, \JsonSerializable
             throw new \InvalidArgumentException('non-nullable from cannot be null');
         }
         $this->container['from'] = $from;
+
+        return $this;
+    }
+
+    /**
+     * Gets from_name
+     *
+     * @return string|null
+     */
+    public function getFromName()
+    {
+        return $this->container['from_name'];
+    }
+
+    /**
+     * Sets from_name
+     *
+     * @param string|null $from_name Display name shown next to `from`. Must match a name given in `from`. Cannot contain `@` or control characters.
+     *
+     * @return self
+     */
+    public function setFromName($from_name)
+    {
+        if (is_null($from_name)) {
+            throw new \InvalidArgumentException('non-nullable from_name cannot be null');
+        }
+        if ((mb_strlen($from_name) > 200)) {
+            throw new \InvalidArgumentException('invalid length for $from_name when calling SendMessage., must be smaller than or equal to 200.');
+        }
+
+        $this->container['from_name'] = $from_name;
 
         return $this;
     }

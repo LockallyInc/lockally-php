@@ -90,6 +90,15 @@ class SendEmailRequestTest extends TestCase
     }
 
     /**
+     * Test attribute "from_name"
+     */
+    public function testPropertyFromName()
+    {
+        // TODO: implement
+        self::markTestIncomplete('Not implemented');
+    }
+
+    /**
      * Test attribute "to"
      */
     public function testPropertyTo()
